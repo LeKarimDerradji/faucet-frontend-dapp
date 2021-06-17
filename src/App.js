@@ -7,7 +7,8 @@ import {
   faucetAddress, 
   faucetAbi } from "./contracts/Faucet";
 import { FaucetContext } from "./contexts/FaucetContext";
-import chestSoundFile from './res/sounds/chest_open.wav'
+import chestAppearsOneSound from './res/sounds/chest_appears_1.wav'
+import chestAppearsTwoSound from './res/sounds/chest_appears_2.wav'
 
 
 
@@ -15,15 +16,19 @@ function App() {
 
   const faucet = useContract(faucetAddress, faucetAbi)
 
-  const tabsOnChange = async () => {
-    const audio = new Audio(chestSoundFile)
+  const tabsOnChange = async (e) => {
+    if (e === 1) {
+      const audio = new Audio(chestAppearsOneSound)
           await audio.play()
-    console.log("hello")
+    } else if (e === 0) {
+      const audio = new Audio(chestAppearsTwoSound)
+          await audio.play()
+    }
   }
 
   return (
     
-    <Tabs onChange={tabsOnChange}  align="end" variant="enclosed"  m={0} colorScheme='purple'>
+    <Tabs onChange={(e) => tabsOnChange(e)}  align="end" variant="enclosed"  m={0} colorScheme='purple'>
       <TabList backgroundColor='purple.400' colorScheme='purple'>
         <Tab backgroundColor='pink.100'>Faucet</Tab>
         <Tab backgroundColor='pink.100'>RemixLike</Tab>
