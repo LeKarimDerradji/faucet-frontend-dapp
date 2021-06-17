@@ -7,15 +7,21 @@ import {
   faucetAddress, 
   faucetAbi } from "./contracts/Faucet";
 import { FaucetContext } from "./contexts/FaucetContext";
+import {
+  tokenAddress,
+  tokenAbi } from './contracts/Token'
+import { KhristalContext } from "./contexts/KhristalContext";
+
 import chestAppearsOneSound from './res/sounds/chest_appears_1.wav'
 import chestAppearsTwoSound from './res/sounds/chest_appears_2.wav'
+import KhristalDapp from "./components/KhristalDapp";
 
 
 
 function App() {
   const toast = useToast();
   const faucet = useContract(faucetAddress, faucetAbi)
-
+  const khristal = useContract(tokenAddress, tokenAbi)
   const tabsOnChange = async (e) => {
     if (e === 1) {
       const audio = new Audio(chestAppearsOneSound)
@@ -41,10 +47,9 @@ function App() {
            </FaucetContext.Provider>
         </TabPanel>
         <TabPanel>
-          {/* <RemixLikeContext.Provider value={ERC20}> */}
-          {/* <RemixLike /> */}
-          RemixLike
-          {/* </RemixLikeContext.Provider> */}
+          <KhristalContext.Provider value={khristal}>
+           <KhristalDapp />
+          </KhristalContext.Provider> 
         </TabPanel>
       </TabPanels>
     </Tabs>
