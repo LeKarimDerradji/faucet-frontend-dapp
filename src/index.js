@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from "@chakra-ui/react"
-
+import { Web3Provider } from 'web3-hooks'
+// USE CHAKRA UI FEATURE FOR TABS --> faucet and TOKEN --> all functionality of remix
 
 ReactDOM.render(
   <React.StrictMode>
    <ChakraProvider>
-    <App />
+    <Web3Provider>
+      <App />
+    </Web3Provider>
     </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
