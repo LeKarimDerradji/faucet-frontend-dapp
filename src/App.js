@@ -1,14 +1,6 @@
-import './App.css';
-import Dapp from './Dapp'
-import { useContract } from 'web3-hooks'
+import Dapp from "./components/Dapp";
 import React from 'react'
-/*
-import {
-  FaucetAddress,
-  FaucetAbi,
-} from './contracts/Faucet' */
-
-/*export const FaucetContext = React.createContext(null)*/
+//import ContractsContextProvider from "./contexts/ContractsContext";
 
 
 function App() {
@@ -18,6 +10,6 @@ function App() {
     <Dapp />
   /*</FaucetContext.Provider>*/
   );
-}
+};
 
 export default App;
