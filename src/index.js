@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { ChakraProvider } from "@chakra-ui/react"
-import { Web3Provider } from 'web3-hooks'
-import { extendTheme } from "@chakra-ui/react"
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { ChakraProvider } from "@chakra-ui/react";
+import { Web3Provider } from "web3-hooks";
+import { extendTheme } from "@chakra-ui/react";
 // USE CHAKRA UI FEATURE FOR TABS --> faucet and TOKEN --> all functionality of remix
 
 const theme = extendTheme({
@@ -20,15 +20,18 @@ const theme = extendTheme({
   }
 })
 
+
 ReactDOM.render(
   <React.StrictMode>
-   <ChakraProvider theme={theme}>
-    <Web3Provider>
-      <App />
-    </Web3Provider>
+    <ChakraProvider
+     theme={theme} 
+    >
+      <Web3Provider>
+        <App />
+      </Web3Provider>
     </ChakraProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
