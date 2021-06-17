@@ -65,7 +65,7 @@ const Faucet = () => {
         const audio = new Audio(beamSoundFile)
         await audio.play()
         toast({
-          title: 'You already claimed 10 Khristal, wait frrror 3 days!',
+          title: 'You already claimed 10 Khristal! Wait until you can withdraw anymore!',
           description: e.message,
           status: 'error',
           duration: 10000,
