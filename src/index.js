@@ -16,16 +16,13 @@ const theme = extendTheme({
         color: "white",
         margin: 0,
       },
-    }
-  }
-})
-
+    },
+  },
+});
 
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider
-     theme={theme} 
-    >
+    <ChakraProvider theme={theme}>
       <Web3Provider>
         <App />
       </Web3Provider>
