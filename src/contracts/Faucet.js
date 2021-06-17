@@ -1,4 +1,4 @@
-export const faucetAddress = '0x7a72f657723C8d2725f2b9C7Eb8a5Bd5ADD35458';
+export const faucetAddress = '0x1E965e5a464a0C13FeEA027b05F72068580B01be';
 
 
 export const faucetAbi = [

@@ -14,6 +14,7 @@ const theme = extendTheme({
       body: {
         bg: "black",
         color: "white",
+        margin: 0,
       },
     }
   }
