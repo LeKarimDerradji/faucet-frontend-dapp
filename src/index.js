@@ -4,11 +4,24 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from "@chakra-ui/react"
 import { Web3Provider } from 'web3-hooks'
+import { extendTheme } from "@chakra-ui/react"
 // USE CHAKRA UI FEATURE FOR TABS --> faucet and TOKEN --> all functionality of remix
+
+const theme = extendTheme({
+  styles: {
+    global: {
+      // styles for the `body`
+      body: {
+        bg: "black",
+        color: "white",
+      },
+    }
+  }
+})
 
 ReactDOM.render(
   <React.StrictMode>
-   <ChakraProvider>
+   <ChakraProvider theme={theme}>
     <Web3Provider>
       <App />
     </Web3Provider>

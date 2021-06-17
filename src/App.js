@@ -1,4 +1,3 @@
-import './App.css';
 import Dapp from './Dapp'
 import { useContract } from 'web3-hooks'
 import React from 'react'
