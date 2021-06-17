@@ -1,4 +1,4 @@
-import { Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
+import { Tabs, TabList, TabPanels, Tab, TabPanel, useToast} from "@chakra-ui/react";
 import Header from "./components/Header";
 import Dapp from "./components/Dapp";
 import React from 'react'
@@ -13,7 +13,7 @@ import chestAppearsTwoSound from './res/sounds/chest_appears_2.wav'
 
 
 function App() {
-
+  const toast = useToast();
   const faucet = useContract(faucetAddress, faucetAbi)
 
   const tabsOnChange = async (e) => {
@@ -29,7 +29,7 @@ function App() {
   return (
     
     <Tabs onChange={(e) => tabsOnChange(e)}  align="end" variant="enclosed"  m={0} colorScheme='purple'>
-      <TabList backgroundColor='purple.400' colorScheme='purple'>
+      <TabList backgroundColor='purple.900' colorScheme='purple'>
         <Tab backgroundColor='pink.100'>Faucet</Tab>
         <Tab backgroundColor='pink.100'>RemixLike</Tab>
       </TabList>

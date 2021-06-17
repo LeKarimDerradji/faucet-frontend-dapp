@@ -2,8 +2,11 @@ import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Web3Context } from "web3-hooks";
 import { ethers } from "ethers";
+
 import secretSoundFile from '../res/sounds/secret.wav'
-import chestSoundFile from '../res/sounds/item_get_1.wav'
+import getItemSoundFile from '../res/sounds/item_get_1.wav'
+import beamSoundFile from '../res/sounds/beam.wav'
+
 import { FaucetContext } from "../contexts/FaucetContext";
 
 
@@ -47,6 +50,8 @@ const Faucet = () => {
       setIsLoading(true)
       let tx = await faucet.requestTokens()
       await tx.wait()
+      const audio = new Audio(getItemSoundFile)
+      await getItemSoundFile.play()
       toast({
         title: 'You recieved 10 Khristal!',
         description: `Use it wisely! `,
@@ -55,10 +60,12 @@ const Faucet = () => {
         isClosable: true,
       })
     } catch (e) {
-      console.log(e)
-      if (e.code === 3) {
+      console.log(e.code)
+      if (e.code === "UNPREDICTABLE_GAS_LIMIT") {
+        const audio = new Audio(beamSoundFile)
+        await audio.play()
         toast({
-          title: 'You already claimed 10 Khristal, wait for 3 days!',
+          title: 'You already claimed 10 Khristal, wait frrror 3 days!',
           description: e.message,
           status: 'error',
           duration: 10000,
