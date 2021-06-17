@@ -1,3 +1,5 @@
+import { useState, useContext} from "react";
+import { KhristalContext } from "../contexts/KhristalContext";
 import {
   Stack,
   HStack,
@@ -12,6 +14,7 @@ import {
   FormHelperText,
   Button,
   Box,
+  useToast,
   ButtonGroup,
 } from "@chakra-ui/react";
 
@@ -24,6 +27,14 @@ import {
 } from "@chakra-ui/react"
 
 const ERC20Token = () => {
+  const toast = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const kristhal = useContext(KhristalContext)
+  const [amount, setAmount] = useState(0)
+  const [address, setAddress] = useState("0x0")
+
+  // Utiliser un reducer pour ce token
+  // parce-que ça fait masse, de masse de fonctions quand meme
   return (
     <> 
     
@@ -174,36 +185,6 @@ const ERC20Token = () => {
             </AccordionItem>
           </Accordion>
 
-
-
-          <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-            <AccordionItem>
-
-              <AccordionButton backgroundColor='purple.900'>
-                <Box colorScheme='purple' flex="1" textAlign="left">
-                  Transfer From
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-
-              <AccordionPanel pb={4}>
-
-                <FormControl id="fn5" spacing={3}>
-                  <HStack mb={2}>
-                    <Input placeholder="sender" size="md" />
-                    <Input placeholder="recipient" size="md" />
-                    <Input placeholder="amount" size="md" />
-                  </HStack>
-                  <Center>
-                    <FormLabel>
-                      <Button colorScheme="purple">TransferFrom</Button>
-                    </FormLabel>
-                  </Center>
-                </FormControl>
-
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
 
 
           <Accordion defaultIndex={[0]} allowMultiple allowToggle>
