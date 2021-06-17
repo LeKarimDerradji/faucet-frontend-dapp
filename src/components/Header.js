@@ -48,12 +48,12 @@ const Header = () => {
  
   return (
     <>
-       <Modal isOpen={isOpenLogoutModal} onClose={onCloseLogoutModal}>
+       <Modal isOpen={isOpenLogoutModal} onClose={onCloseLogoutModal} >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent backgroundColor="purple.900">
           <ModalHeader>Logout from a Dapp</ModalHeader>
           <ModalCloseButton />
-          <ModalBody>
+          <ModalBody fontSize="20px">
             <Text>You can not logout from a Dapp.</Text>
             <Text>
               Disconnect your MetaMask from this website if you want to logout.
@@ -61,7 +61,7 @@ const Header = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="teal" mr={3} onClick={onCloseLogoutModal}>
+            <Button colorScheme="pink" mr={3} onClick={onCloseLogoutModal}>
               Close
             </Button>
           </ModalFooter>

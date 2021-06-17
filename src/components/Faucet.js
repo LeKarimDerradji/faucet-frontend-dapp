@@ -2,6 +2,7 @@ import React from "react";
 import { useContext, useEffect, useState } from "react";
 import { Web3Context } from "web3-hooks";
 import secretSoundFile from '../res/sounds/secret.wav'
+import chestSoundFile from '../res/sounds/item_get_1.wav'
 
 
 import {
@@ -46,7 +47,7 @@ const Faucet = () => {
   const [value, setValue] = useState(0);
 
   const handleOnClick = async () => {
-    const audio = new Audio(secretSoundFile)
+    const audio = new Audio(chestSoundFile)
               await audio.play()
   }
 
@@ -80,9 +81,9 @@ const Faucet = () => {
               </VStack>
             </>
           ) : (
-            <Alert status="error">
-              <AlertIcon />
-              You are on the wrong network please switch to Rinkeby
+            <Alert fontWeight='bold' fontSize='20px' status="error" backgroundColor='purple.400' color='pink.700'>
+              <AlertIcon  color='purple' />
+              You are on the wrong network, please switch to Rinkeby
             </Alert>
           )}
         </>
