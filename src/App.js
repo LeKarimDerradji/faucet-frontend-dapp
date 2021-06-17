@@ -1,11 +1,14 @@
 import Dapp from "./components/Dapp";
-import ContractsContextProvider from "./contexts/ContractsContext";
+import React from 'react'
+//import ContractsContextProvider from "./contexts/ContractsContext";
 
-const App = () => {
+
+function App() {
+  /*const faucet = useContract(FaucetAddress, FaucetAbi)*/
   return (
-    <ContractsContextProvider>
-      <Dapp />
-    </ContractsContextProvider>
+  /*<FaucetContext.Provider value={faucet}>*/
+    <Dapp />
+  /*</FaucetContext.Provider>*/
   );
 };
 
