@@ -55,7 +55,8 @@ const Faucet = () => {
         isClosable: true,
       })
     } catch (e) {
-      if (e.code === 32603) {
+      console.log(e)
+      if (e.code === 3) {
         toast({
           title: 'You already claimed 10 Khristal, wait for 3 days!',
           description: e.message,
@@ -64,7 +65,6 @@ const Faucet = () => {
           isClosable: true,
         })
       }
-      console.log(e)
     } finally {
       setIsLoading(false)
     }

@@ -7,7 +7,7 @@ const Dapp = () => {
   return (
     <>
       <Box minH="100vh" m={0}>
-        <Header />
+        
         <ERC20 />
         <Faucet />
       </Box>
