@@ -312,14 +312,14 @@ const ERC20Token = () => {
   const handleClickDecreaseAllowance = async () => {
     try {
       const decreaseAllowance = await khristal.decreaseAllowance(
-        spender,
-        amount
+        decreaseAllowanceSpender,
+        decreaseAllowanceSubVal
       );
       const allowanceTx = await khristal.allowance(account, spender);
       console.log(decreaseAllowance);
       toast({
         title: `Allowance decreased`,
-        description: `Allowance decreased of ${amount.toString()} for ${spender}`,
+        description: `Allowance decreased of ${decreaseAllowanceSubVal.toString()} for ${decreaseAllowanceSpender}`,
         status: "success",
         duration: 10000,
         isClosable: true,
@@ -338,7 +338,7 @@ const ERC20Token = () => {
       console.log(increaseAllowance);
       toast({
         title: `Allowance increased`,
-        description: `Allowance increased of ${amount.toString()} for ${spender}`,
+        description: `Allowance increased of ${increaseAllowanceSpender.toString()} for ${increaseAllowanceAddVal}`,
         status: "success",
         duration: 10000,
         isClosable: true,
@@ -435,7 +435,9 @@ const ERC20Token = () => {
                   <HStack mb={2}>
                     <Input
                       placeholder="spender"
-                      onChange={(event) => setSpender(event.target.value)}
+                      onChange={(event) =>
+                        setDecreaseAllowanceSpender(event.target.value)
+                      }
                       size="md"
                     />
                     <FormLabel>
@@ -448,7 +450,9 @@ const ERC20Token = () => {
                     </FormLabel>
                     <Input
                       placeholder="substracted value"
-                      onChange={(event) => setAmount(event.target.value)}
+                      onChange={(event) =>
+                        setDecreaseAllowanceSubVal(event.target.value)
+                      }
                       size="md"
                     />
                     <FormHelperText>
