@@ -44,6 +44,19 @@ const ERC20Token = () => {
   const [transferFromSender, setTransferFromSender] = useState("0x0");
   const [transferFromRecipient, setTransferfromRecipient] = useState("0x0");
   const [transferFromAmount, setTransferfromAmount] = useState(0);
+
+  const [allowance, setAllowance] = useState(0);
+
+  const [approveSpender, setApproveSpender] = useState("0x0");
+  const [approveAmount, setApproveAmount] = useState(0);
+
+  const [decreaseAllowanceSpender, setDecreaseAllowanceSpender] =
+    useState("0x0");
+  const [decreaseAllowanceSubVal, setDecreaseAllowanceSubVal] = useState(0);
+
+  const [increaseAllowanceSpender, setIncreaseAllowanceSpender] =
+    useState("0x0");
+  const [increaseAllowanceAddVal, setIncreaseAllowanceAddVal] = useState(0);
   // Utiliser un reducer pour ce token
   // parce-que ça fait masse, de masse de fonctions quand meme
 
@@ -95,12 +108,67 @@ const ERC20Token = () => {
 
   const handleClickGetAllowance = async () => {
     try {
-      const allowance = await khristal.allowance(account, spender);
-      setTokenBalance(ethers.utils.formatEther(allowance));
-      console.log(allowance);
+      const allowanceTx = await khristal.allowance(account, spender);
+      setAllowance(ethers.utils.formatEther(allowance));
+      console.log(allowanceTx);
       toast({
         title: `Allowance of ${account} for ${spender}`,
         description: `${allowance.toString()}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleClickApprove = async () => {
+    try {
+      const approve = await khristal.approve(approveSpender, approveAmount);
+      console.log(approve);
+      toast({
+        title: `Allowance of ${account} for ${spender}`,
+        description: `approved ${approveAmount.toString()} by ${approveSpender}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleClickDecreaseAllowance = async () => {
+    try {
+      const decreaseAllowance = await khristal.decreaseAllowance(
+        spender,
+        amount
+      );
+      const allowanceTx = await khristal.allowance(account, spender);
+      console.log(decreaseAllowance);
+      toast({
+        title: `Allowance decreased`,
+        description: `Allowance decreased of ${amount.toString()} for ${spender}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleClickIncreaseAllowance = async () => {
+    try {
+      const increaseAllowance = await khristal.increaseAllowance(
+        spender,
+        amount
+      );
+      console.log(increaseAllowance);
+      toast({
+        title: `Allowance increased`,
+        description: `Allowance increased of ${amount.toString()} for ${spender}`,
         status: "success",
         duration: 10000,
         isClosable: true,
@@ -157,14 +225,16 @@ const ERC20Token = () => {
                   <HStack>
                     <Input
                       placeholder="spender"
-                      onChange={(e) => setAddress(e.target.value)}
+                      onChange={(e) => setApproveSpender(e.target.value)}
                     />
                     <FormLabel>
-                      <Button colorScheme="purple">Approve</Button>
+                      <Button onClick={handleClickApprove} colorScheme="purple">
+                        Approve
+                      </Button>
                     </FormLabel>
                     <Input
                       placeholder="amount"
-                      onChange={(e) => setAmount(e.target.value)}
+                      onChange={(e) => setApproveAmount(e.target.value)}
                     />
                     <FormHelperText>Approve a given spender</FormHelperText>
                   </HStack>
@@ -185,11 +255,24 @@ const ERC20Token = () => {
               <AccordionPanel pb={4}>
                 <FormControl id="fn2" spacing={3}>
                   <HStack mb={2}>
-                    <Input placeholder="spender" size="md" />
+                    <Input
+                      placeholder="spender"
+                      onChange={(event) => setSpender(event.target.value)}
+                      size="md"
+                    />
                     <FormLabel>
-                      <Button colorScheme="purple">decreaseAllowance</Button>
+                      <Button
+                        onClick={handleClickDecreaseAllowance}
+                        colorScheme="purple"
+                      >
+                        decreaseAllowance
+                      </Button>
                     </FormLabel>
-                    <Input placeholder="substracted value" size="md" />
+                    <Input
+                      placeholder="substracted value"
+                      onChange={(event) => setAmount(event.target.value)}
+                      size="md"
+                    />
                     <FormHelperText>
                       Decrease the allowance of a given spender
                     </FormHelperText>
@@ -214,12 +297,21 @@ const ERC20Token = () => {
                     <Input
                       colorScheme="purple"
                       placeholder="spender"
+                      onChange={(event) =>
+                        setIncreaseAllowanceSpender(event.target.value)
+                      }
                       size="md"
                     />
                     <FormLabel>
                       <Button colorScheme="purple">increaseAllowance</Button>
                     </FormLabel>
-                    <Input placeholder="added value" size="md" />
+                    <Input
+                      placeholder="added value"
+                      onChange={(event) =>
+                        setIncreaseAllowanceAddVal(event.target.value)
+                      }
+                      size="md"
+                    />
                     <FormHelperText>
                       Increase the allowance of a given spender
                     </FormHelperText>
