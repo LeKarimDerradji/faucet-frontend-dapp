@@ -1,4 +1,5 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useReducer } from "react";
+import { ERC20GetterReducer, tokenGetterState } from "../reducer/ERC20GetterReducer";
 import { KhristalContext } from "../contexts/KhristalContext";
 import { ethers } from "ethers";
 import {
@@ -37,9 +38,75 @@ const ERC20Token = () => {
   const [account, setAccount] = useState('0x0');
   const [spender, setSpender] = useState("0x0");
 
+  const [state, dispatch] = useReducer(ERC20GetterReducer, tokenGetterState)
+  const { name, symbol, decimals, total} = state;
+  
   // Utiliser un reducer pour ce token
   // parce-que ça fait masse, de masse de fonctions quand meme
 
+  const handleGetName = async () => {
+    try {
+      let name = await khristal.name()
+      dispatch({type: 'GET_NAME', payload: name})
+      toast({
+        title: "Name of the Token",
+        description: ` is ${name}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
+    } catch (error) { 
+      console.log(error)
+    }
+  }
+
+  const handleGetSymbol = async () => {
+    try {
+      let symbol = await khristal.symbol()
+      dispatch({type: 'GET_SYMBOL', payload: symbol})
+      toast({
+        title: "Symbol of the Token",
+        description: ` is ${symbol}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
+    } catch (error) { 
+      console.log(error)
+    }
+  }
+
+  const handleGetTotal = async () => {
+    try {
+      let totalSupply = await khristal.totalSupply()
+      dispatch({type: 'GET_TOTAL', payload: totalSupply})
+      toast({
+        title: "Total Supply",
+        description: `is ${totalSupply}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
+    } catch (error) { 
+      console.log(error)
+    }
+  }
+
+  const handleGetDecimals = async () => {
+    try {
+      let decimals = await khristal.decimals()
+      dispatch({type: 'GET_DECIMALS', payload: decimals})
+      toast({
+        title: "Number Of Decimals",
+        description: `are ${decimals}`,
+        status: "success",
+        duration: 100000,
+        isClosable: true,
+      });
+    } catch (error) { 
+      console.log(error)
+    }
+  }
   const handleOnClickTransfer = async () => {
     try {
       setIsLoading(true);
@@ -109,10 +176,10 @@ const ERC20Token = () => {
       <Container maxW="100vh">
         <HStack display="flex" justifyContent="space-around" mb={3}>
           <StackDivider />
-          <Button colorScheme="pink">decimals</Button>
-          <Button colorScheme="pink">name</Button>
-          <Button colorScheme="pink">symbol</Button>
-          <Button colorScheme="pink">totalSupply</Button>
+          <Button colorScheme="pink" onClick={handleGetDecimals}>decimals</Button>
+          <Button colorScheme="pink" onClick={handleGetName}>name</Button>
+          <Button colorScheme="pink" onClick={handleGetSymbol}>symbol</Button>
+          <Button colorScheme="pink" onClick={handleGetTotal}>totalSupply</Button>
         </HStack>
 
         <VStack spacing={4} align="stretch">
@@ -305,7 +372,6 @@ const ERC20Token = () => {
                   </FormLabel>
                   <Input
                   type="text" 
-                  value={account}
                   placeholder={"ethereum address"}
                   onChange={(event) => setAccount(event.target.value)} 
                   size="md" />    
