@@ -69,12 +69,10 @@ const ERC20Token = () => {
       <Container maxW="100vh">
         <HStack display="flex" justifyContent="space-around" mb={3}>
           <StackDivider />
-          <Button w={100} colorScheme="purple">
-            decimals
-          </Button>
-          <Button colorScheme="purple">name</Button>
-          <Button colorScheme="purple">symbol</Button>
-          <Button colorScheme="purple">totalSupply</Button>
+          <Button colorScheme="pink">decimals</Button>
+          <Button colorScheme="pink">name</Button>
+          <Button colorScheme="pink">symbol</Button>
+          <Button colorScheme="pink">totalSupply</Button>
         </HStack>
 
         <VStack spacing={4} align="stretch">
@@ -224,14 +222,14 @@ const ERC20Token = () => {
                 <StackDivider borderColor="gray.200" />
                 <HStack spacing={3}>
                   <FormLabel>
-                    <Button colorScheme="purple">allowance</Button>
+                    <Button colorScheme="pink">allowance</Button>
                   </FormLabel>
                   <Input placeholder="owner" size="md" />
                   <Input placeholder="spender" size="md" />
                 </HStack>
                 <HStack>
                   <FormLabel>
-                    <Button colorScheme="purple">balanceOf</Button>
+                    <Button colorScheme="pink">balanceOf</Button>
                   </FormLabel>
                   <Input placeholder="account" size="md" />
                 </HStack>
