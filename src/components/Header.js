@@ -105,7 +105,11 @@ const Header = () => {
 
 
         <Heading color="pink.300" m={5} size="m" as="i" alignSelf="flex-start">
-          Deployed on Rinkeby at <Link color="blue.400">Etherscan-Link</Link>
+          Deployed on Rinkeby at <Link color="blue.400" 
+          href='https://rinkeby.etherscan.io/address/0x1E965e5a464a0C13FeEA027b05F72068580B01be'
+          isExternal>
+            Etherscan-Link 
+            </Link>
         </Heading>
 
         <Spacer />
