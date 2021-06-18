@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { KhristalContext } from "../contexts/KhristalContext";
+import { ethers } from "ethers";
 import {
   Stack,
   HStack,
@@ -30,6 +31,7 @@ const ERC20Token = () => {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const khristal = useContext(KhristalContext);
+  const [ethBalance, setEthBalance] = useState(0)
   const [amount, setAmount] = useState(0);
   const [address, setAddress] = useState("0x0");
 
@@ -64,6 +66,25 @@ const ERC20Token = () => {
       setIsLoading(false);
     }
   };
+
+  
+  const handleClickGetBalance = async () => {
+    try {
+    const balance = await khristal.balanceOf(address)
+    setEthBalance(ethers.utils.formatEther(balance))
+    console.log(balance)
+    toast({
+      title: `Balance of ${address}`,
+      description: `${balance.toString()}`,
+      status: "success",
+      duration: 10000,
+      isClosable: true,
+    });
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <>
       <Container maxW="100vh">
@@ -99,6 +120,7 @@ const ERC20Token = () => {
                       placeholder="amount"
                       onChange={(e) => setAmount(e.target.value)}
                     />
+                    <FormHelperText>Approve a given spender</FormHelperText>
                   </HStack>
                 </FormControl>
               </AccordionPanel>
@@ -122,6 +144,7 @@ const ERC20Token = () => {
                       <Button colorScheme="purple">decreaseAllowance</Button>
                     </FormLabel>
                     <Input placeholder="substracted value" size="md" />
+                    <FormHelperText>Decrease the allowance of a given spender</FormHelperText>
                   </HStack>
                 </FormControl>
               </AccordionPanel>
@@ -149,6 +172,7 @@ const ERC20Token = () => {
                       <Button colorScheme="purple">increaseAllowance</Button>
                     </FormLabel>
                     <Input placeholder="added value" size="md" />
+                    <FormHelperText>Increase the allowance of a given spender</FormHelperText>
                   </HStack>
                 </FormControl>
               </AccordionPanel>
@@ -177,6 +201,7 @@ const ERC20Token = () => {
                       </Button>
                     </FormLabel>
                     <Input placeholder="amount" size="md" />
+                    <FormHelperText>Transfer token to a given address</FormHelperText>
                   </HStack>
                 </FormControl>
               </AccordionPanel>
@@ -204,6 +229,7 @@ const ERC20Token = () => {
                       <Button colorScheme="purple">TransferFrom</Button>
                     </FormLabel>
                   </Center>
+                  <FormHelperText>Transfer token from a given holder to a given address</FormHelperText>
                 </FormControl>
               </AccordionPanel>
             </AccordionItem>
@@ -226,12 +252,18 @@ const ERC20Token = () => {
                   </FormLabel>
                   <Input placeholder="owner" size="md" />
                   <Input placeholder="spender" size="md" />
+                  <FormHelperText>See the amount allowed to a given spender</FormHelperText>
                 </HStack>
                 <HStack>
                   <FormLabel>
-                    <Button colorScheme="pink">balanceOf</Button>
+                    <Button colorScheme="pink" onClick={handleClickGetBalance}>balanceOf</Button>
                   </FormLabel>
-                  <Input placeholder="account" size="md" />
+                  <Input
+                  type="text" 
+                  value={address}
+                  placeholder={"ethereum address"}
+                  onChange={(event) => setAddress(event.target.value)} 
+                  size="md" />    
                 </HStack>
               </AccordionPanel>
             </AccordionItem>
