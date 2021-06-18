@@ -1,6 +1,5 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { Web3Context } from "web3-hooks";
-import beamSoundFile from '../res/sounds/beam.wav'
 
 import {
   Button,
