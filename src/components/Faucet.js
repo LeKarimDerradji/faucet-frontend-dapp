@@ -1,46 +1,30 @@
 import React from "react";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Web3Context } from "web3-hooks";
-import { ethers } from "ethers";
 
-import secretSoundFile from '../res/sounds/secret.wav'
-import getItemSoundFile from '../res/sounds/item_get_1.wav'
-import beamSoundFile from '../res/sounds/beam.wav'
+import getItemSoundFile from "../res/sounds/item_get_1.wav";
+import beamSoundFile from "../res/sounds/beam.wav";
 
 import { FaucetContext } from "../contexts/FaucetContext";
-
 
 import {
   Alert,
   AlertIcon,
-  Input,
   Button,
-  Link,
-  Flex,
-  Spacer,
-  Heading,
   Text,
-  HStack,
   VStack,
-  Spinner,
   useToast,
   Box,
   Image,
-  useDisclosure,
 } from "@chakra-ui/react";
 
-
-
-
-
 const Faucet = () => {
-  const faucet = useContext(FaucetContext)
-  const [web3State, login] = useContext(Web3Context);
+  const faucet = useContext(FaucetContext);
+  const [web3State] = useContext(Web3Context);
   /*const faucet = useContext(FaucetContext)*/
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(0);
-
 
   useEffect(() => {
     // si khristal est pas null alors
@@ -69,50 +53,48 @@ const Faucet = () => {
 
   const handleClickRequestTokens = async () => {
     try {
-      setIsLoading(true)
-      let tx = await faucet.requestTokens()
-      await tx.wait()
-      const audio = new Audio(getItemSoundFile)
-      await getItemSoundFile.play()
+      setIsLoading(true);
+      let tx = await faucet.requestTokens();
+      await tx.wait();
+      // const audio = new Audio(getItemSoundFile);
+      await getItemSoundFile.play();
       toast({
-        title: 'You recieved 10 Khristal!',
+        title: "You recieved 10 Khristal!",
         description: `Use it wisely! `,
-        status: 'success',
+        status: "success",
         duration: 10000,
         isClosable: true,
-      })
+      });
     } catch (e) {
-      console.log(e.code)
+      console.log(e.code);
       if (e.code === "UNPREDICTABLE_GAS_LIMIT") {
-        const audio = new Audio(beamSoundFile)
-        await audio.play()
+        const audio = new Audio(beamSoundFile);
+        await audio.play();
         toast({
-          title: 'You already claimed 10 Khristal! Wait until you can withdraw anymore!',
+          title:
+            "You already claimed 10 Khristal! Wait until you can withdraw anymore!",
           description: e.message,
-          status: 'error',
+          status: "error",
           duration: 10000,
           isClosable: true,
-        })
+        });
       }
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <>
-  
-
-        <Box m={100} alignSelf="center" >
+      <Box m={100} alignSelf="center">
         <>
           {web3State.chainId === 4 ? (
-           
             <>
-             <VStack>
-              <Text color="pink.100" as="b" fontSize="20" textAlign='center'>
-                Time Remaining before next Allowance: {value}
-              </Text>
-              
+              <VStack>
+                <Text color="pink.100" as="b" fontSize="20" textAlign="center">
+                  Time Remaining before next Allowance: {value}
+                </Text>
+
                 <Image
                   borderRadius="full"
                   boxSize="100px"
@@ -124,20 +106,26 @@ const Faucet = () => {
                   isLoading={isLoading}
                   loadingText="Requesting Khristals..."
                   colorScheme="purple"
-                  onClick={handleClickRequestTokens}>
+                  onClick={handleClickRequestTokens}
+                >
                   GET 10 KHRISTAL
                 </Button>
-
               </VStack>
             </>
           ) : (
-            <Alert fontWeight='bold' fontSize='20px' status="error" backgroundColor='purple.400' color='pink.700'>
-              <AlertIcon  color='purple' />
+            <Alert
+              fontWeight="bold"
+              fontSize="20px"
+              status="error"
+              backgroundColor="purple.400"
+              color="pink.700"
+            >
+              <AlertIcon color="purple" />
               You are on the wrong network, please switch to Rinkeby
             </Alert>
           )}
         </>
-        </Box>
+      </Box>
     </>
   );
 };
