@@ -21,7 +21,6 @@ import {
 const Faucet = () => {
   const faucet = useContext(FaucetContext);
   const [web3State] = useContext(Web3Context);
-  /*const faucet = useContext(FaucetContext)*/
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(0);

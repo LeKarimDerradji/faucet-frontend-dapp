@@ -5,7 +5,7 @@ import {
 } from "../reducer/ERC20GetterReducer";
 import { Web3Context } from "web3-hooks";
 import { KhristalContext } from "../contexts/KhristalContext";
-import ERC20Form from './subcomponents/ERC20Form'
+import ERC20Form from "./subcomponents/ERC20Form";
 import {
   HStack,
   VStack,
@@ -20,7 +20,6 @@ const ERC20Token = () => {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const khristal = useContext(KhristalContext);
- 
 
   const [dispatch] = useReducer(ERC20GetterReducer, tokenGetterState);
 
@@ -75,8 +74,6 @@ const ERC20Token = () => {
     }
   }, [khristal, web3State.account, toast]);
 
-  
-
   const handleGetName = async () => {
     setIsLoading(true);
     try {
@@ -91,7 +88,7 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
-    }  finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -110,7 +107,7 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
-    }  finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -128,7 +125,7 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
-    }  finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -173,7 +170,7 @@ const ERC20Token = () => {
         </HStack>
 
         <VStack spacing={4} align="stretch">
-          <ERC20Form/>
+          <ERC20Form />
         </VStack>
       </Container>
     </>
