@@ -40,10 +40,13 @@ function App() {
       m={0}
       colorScheme="purple"
     >
-
       <TabList backgroundColor="purple.900" color="pink">
-        <Tab backgroundColor="white">Faucet</Tab>
-        <Tab backgroundColor="white">ERC20</Tab>
+        <Tab data-key="37" backgroundColor="white">
+          Faucet
+        </Tab>
+        <Tab data-key="39" backgroundColor="white">
+          ERC20
+        </Tab>
       </TabList>
       <Header />
       <TabPanels>

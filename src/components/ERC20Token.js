@@ -176,7 +176,7 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
-    }  finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -195,7 +195,7 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
-    }  finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -213,7 +213,7 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
-    }  finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -395,11 +395,12 @@ const ERC20Token = () => {
       toast({
         title: `Allowance of ${transferFromSender} for ${transferFromRecipient}`,
         description: `${e.message}`,
-        size:"xl",
+        size: "xl",
         status: "warning",
         duration: 10000,
         isClosable: true,
-    })} finally {
+      });
+    } finally {
       setIsLoading(false);
     }
   };
@@ -426,7 +427,7 @@ const ERC20Token = () => {
         <VStack spacing={4} align="stretch">
           <Accordion defaultIndex={[0]} allowMultiple allowToggle>
             <AccordionItem>
-              <AccordionButton backgroundColor="purple.900">
+              <AccordionButton tabindex="-1" backgroundColor="purple.900">
                 <Box colorScheme="purple" flex="1" textAlign="left">
                   Approve
                 </Box>
@@ -438,15 +439,21 @@ const ERC20Token = () => {
                   <HStack>
                     <Input
                       placeholder="spender"
+                      tabindex="10"
                       onChange={(e) => setApproveSpender(e.target.value)}
                     />
                     <FormLabel>
-                      <Button onClick={handleClickApprove} colorScheme="purple">
+                      <Button
+                        tabindex="30"
+                        onClick={handleClickApprove}
+                        colorScheme="purple"
+                      >
                         Approve
                       </Button>
                     </FormLabel>
                     <Input
                       placeholder="amount"
+                      tabindex="20"
                       onChange={(e) => setApproveAmount(e.target.value)}
                     />
                     <FormHelperText>Approve a given spender</FormHelperText>
@@ -458,7 +465,7 @@ const ERC20Token = () => {
 
           <Accordion defaultIndex={[0]} allowMultiple allowToggle>
             <AccordionItem>
-              <AccordionButton backgroundColor="purple.900">
+              <AccordionButton tabindex="-1" backgroundColor="purple.900">
                 <Box colorScheme="purple" flex="1" textAlign="left">
                   Decrease Allowance
                 </Box>
@@ -470,6 +477,7 @@ const ERC20Token = () => {
                   <HStack mb={2}>
                     <Input
                       placeholder="spender"
+                      tabindex="40"
                       onChange={(event) =>
                         setDecreaseAllowanceSpender(event.target.value)
                       }
@@ -478,6 +486,7 @@ const ERC20Token = () => {
                     <FormLabel>
                       <Button
                         onClick={handleClickDecreaseAllowance}
+                        tabindex="60"
                         colorScheme="purple"
                       >
                         decreaseAllowance
@@ -485,6 +494,7 @@ const ERC20Token = () => {
                     </FormLabel>
                     <Input
                       placeholder="substracted value"
+                      tabindex="50"
                       onChange={(event) =>
                         setDecreaseAllowanceSubVal(event.target.value)
                       }
@@ -501,7 +511,7 @@ const ERC20Token = () => {
 
           <Accordion defaultIndex={[0]} allowMultiple allowToggle>
             <AccordionItem>
-              <AccordionButton backgroundColor="purple.900">
+              <AccordionButton tabindex="-1" backgroundColor="purple.900">
                 <Box colorScheme="purple" flex="1" textAlign="left">
                   Increase Allowance
                 </Box>
@@ -514,6 +524,7 @@ const ERC20Token = () => {
                     <Input
                       colorScheme="purple"
                       placeholder="spender"
+                      tabindex="70"
                       onChange={(event) =>
                         setIncreaseAllowanceSpender(event.target.value)
                       }
@@ -522,6 +533,7 @@ const ERC20Token = () => {
                     <FormLabel>
                       <Button
                         onClick={handleClickIncreaseAllowance}
+                        tabindex="90"
                         colorScheme="purple"
                       >
                         increaseAllowance
@@ -529,6 +541,7 @@ const ERC20Token = () => {
                     </FormLabel>
                     <Input
                       placeholder="added value"
+                      tabindex="80"
                       onChange={(event) =>
                         setIncreaseAllowanceAddVal(event.target.value)
                       }
@@ -545,7 +558,7 @@ const ERC20Token = () => {
 
           <Accordion defaultIndex={[0]} allowMultiple allowToggle>
             <AccordionItem>
-              <AccordionButton backgroundColor="purple.900">
+              <AccordionButton tabindex="-1" backgroundColor="purple.900">
                 <Box colorScheme="purple" flex="1" textAlign="left">
                   Transfer
                 </Box>
@@ -557,6 +570,7 @@ const ERC20Token = () => {
                   <HStack mb={2}>
                     <Input
                       placeholder="recipient"
+                      tabindex="100"
                       onChange={(event) => setAddress(event.target.value)}
                       size="md"
                     />
@@ -564,6 +578,7 @@ const ERC20Token = () => {
                     <FormLabel>
                       <Button
                         colorScheme="purple"
+                        tabindex="120"
                         onClick={handleOnClickTransfer}
                       >
                         Transfer
@@ -572,6 +587,7 @@ const ERC20Token = () => {
 
                     <Input
                       placeholder="amount"
+                      tabindex="110"
                       onChange={(event) => setAmount(event.target.value)}
                       size="md"
                     />
@@ -587,7 +603,7 @@ const ERC20Token = () => {
 
           <Accordion defaultIndex={[0]} allowMultiple allowToggle>
             <AccordionItem>
-              <AccordionButton backgroundColor="purple.900">
+              <AccordionButton tabindex="-1" backgroundColor="purple.900">
                 <Box colorScheme="purple" flex="1" textAlign="left">
                   Transfer From
                 </Box>
@@ -599,6 +615,7 @@ const ERC20Token = () => {
                   <HStack mb={2}>
                     <Input
                       placeholder="sender"
+                      tabindex="130"
                       type="text"
                       onChange={(event) =>
                         setTransferFromSender(event.target.value)
@@ -607,6 +624,7 @@ const ERC20Token = () => {
                     />
                     <Input
                       placeholder="recipient"
+                      tabindex="140"
                       type="text"
                       onChange={(event) =>
                         setTransferfromRecipient(event.target.value)
@@ -615,6 +633,7 @@ const ERC20Token = () => {
                     />
                     <Input
                       placeholder="amount"
+                      tabindex="150"
                       type="text"
                       onChange={(event) =>
                         setTransferfromAmount(event.target.value)
@@ -625,6 +644,7 @@ const ERC20Token = () => {
                   <Center>
                     <FormLabel>
                       <Button
+                        tabindex="160"
                         onClick={handleClickTransferFrom}
                         colorScheme="purple"
                       >
@@ -642,7 +662,7 @@ const ERC20Token = () => {
 
           <Accordion defaultIndex={[0]} allowMultiple allowToggle>
             <AccordionItem>
-              <AccordionButton backgroundColor="purple.900">
+              <AccordionButton tabindex="-1" backgroundColor="purple.900">
                 <Box colorScheme="purple" flex="1" textAlign="left">
                   Spy on others
                 </Box>
@@ -655,6 +675,7 @@ const ERC20Token = () => {
                   <FormLabel>
                     <Button
                       colorScheme="pink"
+                      tabindex="190"
                       onClick={handleClickGetAllowance}
                     >
                       allowance
@@ -663,6 +684,7 @@ const ERC20Token = () => {
 
                   <Input
                     placeholder="owner"
+                    tabindex="170"
                     size="md"
                     type="text"
                     placeholder={"owner"}
@@ -672,6 +694,7 @@ const ERC20Token = () => {
 
                   <Input
                     placeholder="spender"
+                    tabindex="180"
                     size="md"
                     type="text"
                     placeholder={"ethereum address"}
@@ -684,13 +707,18 @@ const ERC20Token = () => {
                 </HStack>
                 <HStack>
                   <FormLabel>
-                    <Button colorScheme="pink" onClick={handleClickGetBalance}>
+                    <Button
+                      tabindex="210"
+                      colorScheme="pink"
+                      onClick={handleClickGetBalance}
+                    >
                       balanceOf
                     </Button>
                   </FormLabel>
                   <Input
                     type="text"
                     placeholder={"ethereum address"}
+                    tabindex="200"
                     onChange={(event) => setAccount(event.target.value)}
                     size="md"
                   />
