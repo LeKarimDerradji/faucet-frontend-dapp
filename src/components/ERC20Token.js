@@ -522,14 +522,6 @@ const ERC20Token = () => {
                       size="md"
                     />
 
-                    <Input
-                      value={address}
-                      type="text"
-                      placeholder="recipient"
-                      size="md"
-                      onChange={(e) => setAddress(e.target.value)}
-                    />
-
                     <FormLabel>
                       <Button
                         colorScheme="purple"
@@ -543,14 +535,6 @@ const ERC20Token = () => {
                       placeholder="amount"
                       onChange={(event) => setAmount(event.target.value)}
                       size="md"
-                    />
-
-                    <Input
-                      value={amount}
-                      type="text"
-                      placeholder="amount"
-                      size="md"
-                      onChange={(e) => setAmount(e.target.event)}
                     />
 
                     <FormHelperText>
