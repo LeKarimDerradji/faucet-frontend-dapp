@@ -2,9 +2,7 @@ import { useState, useContext } from "react";
 import { ethers } from "ethers";
 import { Web3Context } from "web3-hooks";
 import { KhristalContext } from "../contexts/KhristalContext";
-import { ethers } from "ethers";
 import {
-  Stack,
   HStack,
   VStack,
   StackDivider,
@@ -34,15 +32,18 @@ const ERC20Token = () => {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const khristal = useContext(KhristalContext);
-  const [tokenBalance, setTokenBalance] = useState(0)
+  const [tokenBalance, setTokenBalance] = useState(0);
   const [amount, setAmount] = useState(0);
   const [address, setAddress] = useState("0x0");
-  const [account, setAccount] = useState('0x0');
+  const [account, setAccount] = useState("0x0");
   const [spender, setSpender] = useState("0x0");
 
   const [isBalanceOfLoading, setIsBalanceOfLoading] = useState(false);
   const [balance, setBalance] = useState(0);
 
+  const [transferFromSender, setTransferFromSender] = useState("0x0");
+  const [transferFromRecipient, setTransferfromRecipient] = useState("0x0");
+  const [transferFromAmount, setTransferfromAmount] = useState(0);
   // Utiliser un reducer pour ce token
   // parce-que ça fait masse, de masse de fonctions quand meme
 
@@ -75,41 +76,60 @@ const ERC20Token = () => {
     }
   };
 
-
   const handleClickGetBalance = async () => {
     try {
-    const balance = await khristal.balanceOf(account)
-    setTokenBalance(ethers.utils.formatEther(balance))
-    console.log(balance)
-    toast({
-      title: `Balance of ${account}`,
-      description: `${balance.toString()}`,
-      status: "success",
-      duration: 10000,
-      isClosable: true,
-    });
+      const balance = await khristal.balanceOf(account);
+      setTokenBalance(ethers.utils.formatEther(balance));
+      console.log(balance);
+      toast({
+        title: `Balance of ${account}`,
+        description: `${balance.toString()}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
   const handleClickGetAllowance = async () => {
     try {
-    const allowance = await khristal.allowance(account, spender)
-    setTokenBalance(ethers.utils.formatEther(allowance))
-    console.log(allowance)
-    toast({
-      title: `Allowance of ${account} for ${spender}`,
-      description: `${allowance.toString()}`,
-      status: "success",
-      duration: 10000,
-      isClosable: true,
-    });
+      const allowance = await khristal.allowance(account, spender);
+      setTokenBalance(ethers.utils.formatEther(allowance));
+      console.log(allowance);
+      toast({
+        title: `Allowance of ${account} for ${spender}`,
+        description: `${allowance.toString()}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }
+  };
 
+  const handleClickTransferFrom = async () => {
+    try {
+      const transferFrom = await khristal.transferFrom(
+        transferFromSender,
+        transferFromRecipient,
+        transferFromAmount
+      );
+      setTokenBalance(ethers.utils.formatEther(transferFrom));
+      console.log(transferFrom);
+      toast({
+        title: `Allowance of ${account} for ${spender}`,
+        description: `${transferFrom.toString()}`,
+        status: "success",
+        duration: 10000,
+        isClosable: true,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -170,7 +190,9 @@ const ERC20Token = () => {
                       <Button colorScheme="purple">decreaseAllowance</Button>
                     </FormLabel>
                     <Input placeholder="substracted value" size="md" />
-                    <FormHelperText>Decrease the allowance of a given spender</FormHelperText>
+                    <FormHelperText>
+                      Decrease the allowance of a given spender
+                    </FormHelperText>
                   </HStack>
                 </FormControl>
               </AccordionPanel>
@@ -192,12 +214,15 @@ const ERC20Token = () => {
                     <Input
                       colorScheme="purple"
                       placeholder="spender"
-                      size="md" />
+                      size="md"
+                    />
                     <FormLabel>
                       <Button colorScheme="purple">increaseAllowance</Button>
                     </FormLabel>
                     <Input placeholder="added value" size="md" />
-                    <FormHelperText>Increase the allowance of a given spender</FormHelperText>
+                    <FormHelperText>
+                      Increase the allowance of a given spender
+                    </FormHelperText>
                   </HStack>
                 </FormControl>
               </AccordionPanel>
@@ -226,7 +251,9 @@ const ERC20Token = () => {
                       </Button>
                     </FormLabel>
                     <Input placeholder="amount" size="md" />
-                    <FormHelperText>Transfer token to a given address</FormHelperText>
+                    <FormHelperText>
+                      Transfer token to a given address
+                    </FormHelperText>
                   </HStack>
                 </FormControl>
               </AccordionPanel>
@@ -245,27 +272,44 @@ const ERC20Token = () => {
               <AccordionPanel pb={4}>
                 <FormControl id="fn5" spacing={3}>
                   <HStack mb={2}>
-                    <Input 
-                    placeholder="sender" 
-                    type="text" 
-                    onChange={(event) => setAccount(event.target.value)} 
-                    size="md" />
-                    <Input 
-                    placeholder="recipient" 
-                    type="text" 
-                    onChange={(event) => setAddress(event.target.value)} 
-                    size="md" />
-                    <Input 
-                    placeholder="amount" 
-                    type='text'
-                    size="md" />
+                    <Input
+                      placeholder="sender"
+                      type="text"
+                      onChange={(event) =>
+                        setTransferFromSender(event.target.value)
+                      }
+                      size="md"
+                    />
+                    <Input
+                      placeholder="recipient"
+                      type="text"
+                      onChange={(event) =>
+                        setTransferfromRecipient(event.target.value)
+                      }
+                      size="md"
+                    />
+                    <Input
+                      placeholder="amount"
+                      type="text"
+                      onChange={(event) =>
+                        setTransferfromAmount(event.target.value)
+                      }
+                      size="md"
+                    />
                   </HStack>
                   <Center>
                     <FormLabel>
-                      <Button colorScheme="purple">TransferFrom</Button>
+                      <Button
+                        onClick={handleClickTransferFrom}
+                        colorScheme="purple"
+                      >
+                        TransferFrom
+                      </Button>
                     </FormLabel>
                   </Center>
-                  <FormHelperText>Transfer token from a given holder to a given address</FormHelperText>
+                  <FormHelperText>
+                    Transfer token from a given holder to a given address
+                  </FormHelperText>
                 </FormControl>
               </AccordionPanel>
             </AccordionItem>
@@ -284,40 +328,47 @@ const ERC20Token = () => {
                 <StackDivider borderColor="gray.200" />
                 <HStack spacing={3}>
                   <FormLabel>
-                    <Button 
-                    colorScheme="pink"
-                    onClick={handleClickGetAllowance}>allowance</Button>
+                    <Button
+                      colorScheme="pink"
+                      onClick={handleClickGetAllowance}
+                    >
+                      allowance
+                    </Button>
                   </FormLabel>
 
-                  <Input 
-                  placeholder="owner" 
-                  size="md" 
-                  type="text" 
-                  placeholder={"owner"}
-                  onChange={(event) => setAccount(event.target.value)} 
-                  size="md" />
+                  <Input
+                    placeholder="owner"
+                    size="md"
+                    type="text"
+                    placeholder={"owner"}
+                    onChange={(event) => setAccount(event.target.value)}
+                    size="md"
+                  />
 
-                  <Input 
-                  placeholder="spender" 
-                  size="md" 
-                  type="text" 
-                  placeholder={"ethereum address"}
-                  onChange={(event) => setSpender(event.target.value)} 
-                  size="md" />
-                  <FormHelperText>See the amount allowed to a given spender</FormHelperText>
+                  <Input
+                    placeholder="spender"
+                    size="md"
+                    type="text"
+                    placeholder={"ethereum address"}
+                    onChange={(event) => setSpender(event.target.value)}
+                    size="md"
+                  />
+                  <FormHelperText>
+                    See the amount allowed to a given spender
+                  </FormHelperText>
                 </HStack>
                 <HStack>
                   <FormLabel>
-
-                    <Button colorScheme="pink" onClick={handleClickGetBalance}>balanceOf</Button>
+                    <Button colorScheme="pink" onClick={handleClickGetBalance}>
+                      balanceOf
+                    </Button>
                   </FormLabel>
                   <Input
-                  type="text" 
-                  value={account}
-                  placeholder={"ethereum address"}
-                  onChange={(event) => setAccount(event.target.value)} 
-                  size="md" />    
-
+                    type="text"
+                    placeholder={"ethereum address"}
+                    onChange={(event) => setAccount(event.target.value)}
+                    size="md"
+                  />
                 </HStack>
               </AccordionPanel>
             </AccordionItem>
