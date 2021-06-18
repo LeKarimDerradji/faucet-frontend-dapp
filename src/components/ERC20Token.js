@@ -232,8 +232,7 @@ const ERC20Token = () => {
   const handleOnClickTransfer = async () => {
     try {
       setIsLoading(true);
-      const amount = await ethers.utils.parseEther(amount);
-      let tx = await khristal.transfer(address, amount.toString());
+      let tx = await khristal.transfer(address, Number(amount));
       await tx.wait();
       toast({
         title: "Transfer effectuée !!",
@@ -316,6 +315,7 @@ const ERC20Token = () => {
         decreaseAllowanceSubVal
       );
       const allowanceTx = await khristal.allowance(account, spender);
+      setAllowance(allowanceTx);
       console.log(decreaseAllowance);
       toast({
         title: `Allowance decreased`,
@@ -335,6 +335,8 @@ const ERC20Token = () => {
         increaseAllowanceSpender,
         increaseAllowanceAddVal
       );
+      const allowanceTx = await khristal.allowance(account, spender);
+      setAllowance(allowanceTx);
       console.log(increaseAllowance);
       toast({
         title: `Allowance increased`,
