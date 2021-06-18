@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import { useState, useContext, useReducer } from "react";
 import { ERC20GetterReducer, tokenGetterState } from "../reducer/ERC20GetterReducer";
+=======
+import { useState, useContext } from "react";
+import { ethers } from "ethers";
+import { Web3Context } from "web3-hooks";
+>>>>>>> 7bf277c1410db50c782accec6077eb1b9e1850e2
 import { KhristalContext } from "../contexts/KhristalContext";
 import { ethers } from "ethers";
 import {
@@ -29,6 +35,7 @@ import {
 } from "@chakra-ui/react";
 
 const ERC20Token = () => {
+  const [web3state, login] = useContext(Web3Context);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const khristal = useContext(KhristalContext);
@@ -38,9 +45,14 @@ const ERC20Token = () => {
   const [account, setAccount] = useState('0x0');
   const [spender, setSpender] = useState("0x0");
 
+<
   const [state, dispatch] = useReducer(ERC20GetterReducer, tokenGetterState)
   const { name, symbol, decimals, total} = state;
   
+
+  const [isBalanceOfLoading, setIsBalanceOfLoading] = useState(false);
+  const [balance, setBalance] = useState(0);
+
   // Utiliser un reducer pour ce token
   // parce-que ça fait masse, de masse de fonctions quand meme
 
@@ -136,7 +148,7 @@ const ERC20Token = () => {
     }
   };
 
-  
+
   const handleClickGetBalance = async () => {
     try {
     const balance = await khristal.balanceOf(account)
@@ -170,6 +182,7 @@ const ERC20Token = () => {
       console.log(e)
     }
   }
+
 
   return (
     <>
@@ -368,6 +381,7 @@ const ERC20Token = () => {
                 </HStack>
                 <HStack>
                   <FormLabel>
+
                     <Button colorScheme="pink" onClick={handleClickGetBalance}>balanceOf</Button>
                   </FormLabel>
                   <Input
@@ -375,6 +389,7 @@ const ERC20Token = () => {
                   placeholder={"ethereum address"}
                   onChange={(event) => setAccount(event.target.value)} 
                   size="md" />    
+
                 </HStack>
               </AccordionPanel>
             </AccordionItem>
