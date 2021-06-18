@@ -1,4 +1,6 @@
 import { useState, useContext } from "react";
+import { ethers } from "ethers";
+import { Web3Context } from "web3-hooks";
 import { KhristalContext } from "../contexts/KhristalContext";
 import {
   Stack,
@@ -27,11 +29,15 @@ import {
 } from "@chakra-ui/react";
 
 const ERC20Token = () => {
+  const [web3state, login] = useContext(Web3Context);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const khristal = useContext(KhristalContext);
   const [amount, setAmount] = useState(0);
   const [address, setAddress] = useState("0x0");
+
+  const [isBalanceOfLoading, setIsBalanceOfLoading] = useState(false);
+  const [balance, setBalance] = useState(0);
 
   // Utiliser un reducer pour ce token
   // parce-que ça fait masse, de masse de fonctions quand meme
@@ -64,6 +70,18 @@ const ERC20Token = () => {
       setIsLoading(false);
     }
   };
+
+  const handleClickGetBalance = async () => {
+    try {
+      setIsBalanceOfLoading(true);
+      const balanceOf = await web3state.provider.getBalance(address);
+      setBalance(ethers.utils.formatEther(balance));
+      console.log(balance);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
       <Container maxW="100vh">
@@ -229,9 +247,16 @@ const ERC20Token = () => {
                 </HStack>
                 <HStack>
                   <FormLabel>
-                    <Button colorScheme="pink">balanceOf</Button>
+                    <Button onClick={handleClickGetBalance} colorScheme="pink">
+                      balanceOf
+                    </Button>
                   </FormLabel>
-                  <Input placeholder="account" size="md" />
+                  <Input
+                    placeholder="account"
+                    size="md"
+                    value={address}
+                    onChange={(event) => setAddress(event.target.value)}
+                  />
                 </HStack>
               </AccordionPanel>
             </AccordionItem>
