@@ -94,7 +94,9 @@ const ERC20Token = () => {
                       placeholder="spender"
                       onChange={(e) => setAddress(e.target.value)}
                     />
-                    <Button colorScheme="purple">Approve</Button>
+                    <FormLabel>
+                      <Button colorScheme="purple">Approve</Button>
+                    </FormLabel>
                     <Input
                       placeholder="amount"
                       onChange={(e) => setAmount(e.target.value)}
