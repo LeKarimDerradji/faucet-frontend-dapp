@@ -39,5 +39,14 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+    <script>
+     window.addEventListener("keydown", function (e) {
+         // console.log(`e.keycode = ${e.keyCode}`);
+         const navButton = document.querySelector(`*[data-key="${e.keyCode}"]`);
+         if (navButton) {
+             navButton.click();
+         }
+     });
+    </script>
   </body>
 </html>
