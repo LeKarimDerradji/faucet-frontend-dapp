@@ -1,7 +1,7 @@
-import React from 'react'
+import React from "react";
 import { useState, useContext } from "react";
 import { Web3Context } from "web3-hooks";
-import {ethers} from 'ethers'
+import { ethers } from "ethers";
 import { KhristalContext } from "../../contexts/KhristalContext";
 import {
   HStack,
@@ -24,9 +24,7 @@ import {
   AccordionIcon,
 } from "@chakra-ui/react";
 
-
-  
-const  ERC20Form = () => {
+const ERC20Form = () => {
   const [web3State] = useContext(Web3Context);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -36,7 +34,6 @@ const  ERC20Form = () => {
   const [address, setAddress] = useState("0x0");
   const [account, setAccount] = useState("0x0");
   const [spender, setSpender] = useState("0x0");
-
 
   const [balance, setBalance] = useState(0);
 
@@ -57,6 +54,17 @@ const  ERC20Form = () => {
     useState("0x0");
   const [increaseAllowanceAddVal, setIncreaseAllowanceAddVal] = useState(0);
 
+  const ToastHover = (title, description) => {
+    return toast({
+      title: title,
+      description: description,
+      status: "info",
+      position: "top",
+      duration: 2000,
+      isClosable: true,
+    });
+  };
+
   const handleOnClickTransfer = async () => {
     setIsLoading(true);
     try {
@@ -74,8 +82,7 @@ const  ERC20Form = () => {
       console.log(e);
       if (e.code === "UNPREDICTABLE_GAS_LIMIT") {
         toast({
-          title:
-            "error",
+          title: "error",
           description: e.message,
           status: "error",
           duration: 10000,
@@ -214,320 +221,368 @@ const  ERC20Form = () => {
       toast({
         title: `Allowance of ${transferFromSender} for ${transferFromRecipient}`,
         description: `${e.message}`,
-        size:"xl",
+        size: "xl",
         status: "warning",
         duration: 10000,
         isClosable: true,
-    })} finally {
+      });
+    } finally {
       setIsLoading(false);
     }
   };
 
-    return (
-        <>
+  return (
+    <>
       <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-            <AccordionItem>
-              <AccordionButton tabindex="-1" backgroundColor="purple.900">
-                <Box colorScheme="purple" flex="1" textAlign="left">
-                  Approve
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
+        <AccordionItem>
+          <AccordionButton tabindex="-1" backgroundColor="purple.900">
+            <Box colorScheme="purple" flex="1" textAlign="left">
+              Approve
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
 
-              <AccordionPanel pb={4}>
-                <FormControl id="fn1" spacing={1}>
-                  <HStack>
-                    <Input
-                      placeholder="spender"
-                      tabindex="10"
-                      onChange={(e) => setApproveSpender(e.target.value)}
-                    />
-                    <FormLabel>
-                      <Button
-                        tabindex="30"
-                        onClick={handleClickApprove}
-                        colorScheme="purple"
-                      >
-                        Approve
-                      </Button>
-                    </FormLabel>
-                    <Input
-                      placeholder="amount"
-                      tabindex="20"
-                      onChange={(e) => setApproveAmount(e.target.value)}
-                    />
-                    <FormHelperText>Approve a given spender</FormHelperText>
-                  </HStack>
-                </FormControl>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          <AccordionPanel pb={4}>
+            <FormControl id="fn1" spacing={1}>
+              <HStack>
+                <Input
+                  placeholder="spender"
+                  tabindex="10"
+                  onMouseEnter={() =>
+                    ToastHover("Approve", "Approve a given spender")
+                  }
+                  onChange={(e) => setApproveSpender(e.target.value)}
+                />
+                <FormLabel>
+                  <Button
+                    tabindex="30"
+                    onClick={handleClickApprove}
+                    colorScheme="purple"
+                  >
+                    Approve
+                  </Button>
+                </FormLabel>
+                <Input
+                  placeholder="amount"
+                  tabindex="20"
+                  onMouseEnter={() =>
+                    ToastHover("Approve", "Approve a given spender")
+                  }
+                  onChange={(e) => setApproveAmount(e.target.value)}
+                />
+              </HStack>
+            </FormControl>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
 
-          <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-            <AccordionItem>
-              <AccordionButton tabindex="-1" backgroundColor="purple.900">
-                <Box colorScheme="purple" flex="1" textAlign="left">
-                  Decrease Allowance
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
+      <Accordion defaultIndex={[0]} allowMultiple allowToggle>
+        <AccordionItem>
+          <AccordionButton tabindex="-1" backgroundColor="purple.900">
+            <Box colorScheme="purple" flex="1" textAlign="left">
+              Decrease Allowance
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
 
-              <AccordionPanel pb={4}>
-                <FormControl id="fn2" spacing={3}>
-                  <HStack mb={2}>
-                    <Input
-                      placeholder="spender"
-                      tabindex="40"
-                      onChange={(event) =>
-                        setDecreaseAllowanceSpender(event.target.value)
-                      }
-                      size="md"
-                    />
-                    <FormLabel>
-                      <Button
-                        onClick={handleClickDecreaseAllowance}
-                        tabindex="60"
-                        colorScheme="purple"
-                      >
-                        decreaseAllowance
-                      </Button>
-                    </FormLabel>
-                    <Input
-                      placeholder="substracted value"
-                      tabindex="50"
-                      onChange={(event) =>
-                        setDecreaseAllowanceSubVal(event.target.value)
-                      }
-                      size="md"
-                    />
-                    <FormHelperText>
-                      Decrease the allowance of a given spender
-                    </FormHelperText>
-                  </HStack>
-                </FormControl>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          <AccordionPanel pb={4}>
+            <FormControl id="fn2" spacing={3}>
+              <HStack mb={2}>
+                <Input
+                  placeholder="spender"
+                  tabindex="40"
+                  onMouseEnter={() =>
+                    ToastHover(
+                      "Decrease Allowance",
+                      "Decrease the allowance of a given spender"
+                    )
+                  }
+                  onChange={(event) =>
+                    setDecreaseAllowanceSpender(event.target.value)
+                  }
+                  size="md"
+                />
+                <FormLabel>
+                  <Button
+                    onClick={handleClickDecreaseAllowance}
+                    tabindex="60"
+                    colorScheme="purple"
+                  >
+                    decreaseAllowance
+                  </Button>
+                </FormLabel>
+                <Input
+                  placeholder="substracted value"
+                  tabindex="50"
+                  onMouseEnter={() =>
+                    ToastHover(
+                      "Decrease Allowance",
+                      "Decrease the allowance of a given spender"
+                    )
+                  }
+                  onChange={(event) =>
+                    setDecreaseAllowanceSubVal(event.target.value)
+                  }
+                  size="md"
+                />
+              </HStack>
+            </FormControl>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
 
-          <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-            <AccordionItem>
-              <AccordionButton tabindex="-1" backgroundColor="purple.900">
-                <Box colorScheme="purple" flex="1" textAlign="left">
-                  Increase Allowance
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
+      <Accordion defaultIndex={[0]} allowMultiple allowToggle>
+        <AccordionItem>
+          <AccordionButton tabindex="-1" backgroundColor="purple.900">
+            <Box colorScheme="purple" flex="1" textAlign="left">
+              Increase Allowance
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
 
-              <AccordionPanel pb={4}>
-                <FormControl id="fn3" spacing={3}>
-                  <HStack mb={2}>
-                    <Input
-                      colorScheme="purple"
-                      placeholder="spender"
-                      tabindex="70"
-                      onChange={(event) =>
-                        setIncreaseAllowanceSpender(event.target.value)
-                      }
-                      size="md"
-                    />
-                    <FormLabel>
-                      <Button
-                        onClick={handleClickIncreaseAllowance}
-                        tabindex="90"
-                        colorScheme="purple"
-                      >
-                        increaseAllowance
-                      </Button>
-                    </FormLabel>
-                    <Input
-                      placeholder="added value"
-                      tabindex="80"
-                      onChange={(event) =>
-                        setIncreaseAllowanceAddVal(event.target.value)
-                      }
-                      size="md"
-                    />
-                    <FormHelperText>
-                      Increase the allowance of a given spender
-                    </FormHelperText>
-                  </HStack>
-                </FormControl>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+          <AccordionPanel pb={4}>
+            <FormControl id="fn3" spacing={3}>
+              <HStack mb={2}>
+                <Input
+                  colorScheme="purple"
+                  placeholder="spender"
+                  onMouseEnter={() =>
+                    ToastHover(
+                      "Increase Allowance",
+                      "Increase the allowance of a given spender"
+                    )
+                  }
+                  tabindex="70"
+                  onChange={(event) =>
+                    setIncreaseAllowanceSpender(event.target.value)
+                  }
+                  size="md"
+                />
+                <FormLabel>
+                  <Button
+                    onClick={handleClickIncreaseAllowance}
+                    tabindex="90"
+                    colorScheme="purple"
+                  >
+                    increaseAllowance
+                  </Button>
+                </FormLabel>
+                <Input
+                  placeholder="added value"
+                  tabindex="80"
+                  onMouseEnter={() =>
+                    ToastHover(
+                      "Increase Allowance",
+                      "Increase the allowance of a given spender"
+                    )
+                  }
+                  onChange={(event) =>
+                    setIncreaseAllowanceAddVal(event.target.value)
+                  }
+                  size="md"
+                />
+              </HStack>
+            </FormControl>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
 
-          <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-            <AccordionItem>
-              <AccordionButton tabindex="-1" backgroundColor="purple.900">
-                <Box colorScheme="purple" flex="1" textAlign="left">
-                  Transfer
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
+      <Accordion defaultIndex={[0]} allowMultiple allowToggle>
+        <AccordionItem>
+          <AccordionButton tabindex="-1" backgroundColor="purple.900">
+            <Box colorScheme="purple" flex="1" textAlign="left">
+              Transfer
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
 
-              <AccordionPanel pb={4}>
-                <FormControl id="fn4" spacing={3}>
-                  <HStack mb={2}>
-                    <Input
-                      placeholder="recipient"
-                      tabindex="100"
-                      onChange={(event) => setAddress(event.target.value)}
-                      size="md"
-                    />
+          <AccordionPanel pb={4}>
+            <FormControl id="fn4" spacing={3}>
+              <HStack mb={2}>
+                <Input
+                  placeholder="recipient"
+                  tabindex="100"
+                  onMouseEnter={() =>
+                    ToastHover(
+                      "Transfer",
+                      "Transfer an amount of token to the recipient"
+                    )
+                  }
+                  onChange={(event) => setAddress(event.target.value)}
+                  size="md"
+                />
 
-                    <FormLabel>
-                      <Button
-                        colorScheme="purple"
-                        tabindex="120"
-                        onClick={handleOnClickTransfer}
-                      >
-                        Transfer
-                      </Button>
-                    </FormLabel>
+                <FormLabel>
+                  <Button
+                    colorScheme="purple"
+                    tabindex="120"
+                    onClick={handleOnClickTransfer}
+                  >
+                    Transfer
+                  </Button>
+                </FormLabel>
 
-                    <Input
-                      placeholder="amount"
-                      tabindex="110"
-                      onChange={(event) => setAmount(event.target.value)}
-                      size="md"
-                    />
+                <Input
+                  placeholder="amount"
+                  tabindex="110"
+                  onMouseEnter={() =>
+                    ToastHover(
+                      "Transfer",
+                      "Transfer an amount of token to the recipient"
+                    )
+                  }
+                  onChange={(event) => setAmount(event.target.value)}
+                  size="md"
+                />
+              </HStack>
+            </FormControl>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
 
-                    <FormHelperText>
-                      Transfer token to a given address
-                    </FormHelperText>
-                  </HStack>
-                </FormControl>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+      <Accordion defaultIndex={[0]} allowMultiple allowToggle>
+        <AccordionItem>
+          <AccordionButton tabindex="-1" backgroundColor="purple.900">
+            <Box colorScheme="purple" flex="1" textAlign="left">
+              Transfer From
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
 
-          <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-            <AccordionItem>
-              <AccordionButton tabindex="-1" backgroundColor="purple.900">
-                <Box colorScheme="purple" flex="1" textAlign="left">
-                  Transfer From
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
+          <AccordionPanel pb={4}>
+            <FormControl id="fn5" spacing={3}>
+              <HStack
+                mb={2}
+                onMouseEnter={() =>
+                  ToastHover(
+                    "Transfer From",
+                    "Transfer an amount of token to the recipient from the sender account"
+                  )
+                }
+              >
+                <Input
+                  placeholder="sender"
+                  tabindex="130"
+                  type="text"
+                  onChange={(event) =>
+                    setTransferFromSender(event.target.value)
+                  }
+                  size="md"
+                />
+                <Input
+                  placeholder="recipient"
+                  tabindex="140"
+                  type="text"
+                  onChange={(event) =>
+                    setTransferfromRecipient(event.target.value)
+                  }
+                  size="md"
+                />
+                <Input
+                  placeholder="amount"
+                  tabindex="150"
+                  type="text"
+                  onChange={(event) =>
+                    setTransferfromAmount(event.target.value)
+                  }
+                  size="md"
+                />
+              </HStack>
+              <Center>
+                <FormLabel>
+                  <Button
+                    tabindex="160"
+                    onClick={handleClickTransferFrom}
+                    colorScheme="purple"
+                  >
+                    TransferFrom
+                  </Button>
+                </FormLabel>
+              </Center>
+            </FormControl>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
 
-              <AccordionPanel pb={4}>
-                <FormControl id="fn5" spacing={3}>
-                  <HStack mb={2}>
-                    <Input
-                      placeholder="sender"
-                      tabindex="130"
-                      type="text"
-                      onChange={(event) =>
-                        setTransferFromSender(event.target.value)
-                      }
-                      size="md"
-                    />
-                    <Input
-                      placeholder="recipient"
-                      tabindex="140"
-                      type="text"
-                      onChange={(event) =>
-                        setTransferfromRecipient(event.target.value)
-                      }
-                      size="md"
-                    />
-                    <Input
-                      placeholder="amount"
-                      tabindex="150"
-                      type="text"
-                      onChange={(event) =>
-                        setTransferfromAmount(event.target.value)
-                      }
-                      size="md"
-                    />
-                  </HStack>
-                  <Center>
-                    <FormLabel>
-                      <Button
-                        tabindex="160"
-                        onClick={handleClickTransferFrom}
-                        colorScheme="purple"
-                      >
-                        TransferFrom
-                      </Button>
-                    </FormLabel>
-                  </Center>
-                  <FormHelperText>
-                    Transfer token from a given holder to a given address
-                  </FormHelperText>
-                </FormControl>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
+      <Accordion defaultIndex={[0]} allowMultiple allowToggle>
+        <AccordionItem>
+          <AccordionButton tabindex="-1" backgroundColor="purple.900">
+            <Box colorScheme="purple" flex="1" textAlign="left">
+              Spy on others
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
 
-          <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-            <AccordionItem>
-              <AccordionButton tabindex="-1" backgroundColor="purple.900">
-                <Box colorScheme="purple" flex="1" textAlign="left">
-                  Spy on others
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
+          <AccordionPanel pb={4}>
+            <StackDivider borderColor="gray.200" />
+            <HStack spacing={3}>
+              <FormLabel>
+                <Button
+                  colorScheme="pink"
+                  tabindex="190"
+                  onClick={handleClickGetAllowance}
+                >
+                  allowance
+                </Button>
+              </FormLabel>
 
-              <AccordionPanel pb={4}>
-                <StackDivider borderColor="gray.200" />
-                <HStack spacing={3}>
-                  <FormLabel>
-                    <Button
-                      colorScheme="pink"
-                      tabindex="190"
-                      onClick={handleClickGetAllowance}
-                    >
-                      allowance
-                    </Button>
-                  </FormLabel>
+              <Input
+                placeholder="owner"
+                tabindex="170"
+                onMouseEnter={() =>
+                  ToastHover(
+                    "Allowance",
+                    "Retrieve the amount owner allowed spender to spend"
+                  )
+                }
+                size="md"
+                type="text"
+                placeholder={"owner"}
+                onChange={(event) => setAccount(event.target.value)}
+                size="md"
+              />
 
-                  <Input
-                    placeholder="owner"
-                    tabindex="170"
-                    size="md"
-                    type="text"
-                    placeholder={"owner"}
-                    onChange={(event) => setAccount(event.target.value)}
-                    size="md"
-                  />
-
-                  <Input
-                    placeholder="spender"
-                    tabindex="180"
-                    size="md"
-                    type="text"
-                    placeholder={"ethereum address"}
-                    onChange={(event) => setSpender(event.target.value)}
-                    size="md"
-                  />
-                  <FormHelperText>
-                    See the amount allowed to a given spender
-                  </FormHelperText>
-                </HStack>
-                <HStack>
-                  <FormLabel>
-                    <Button
-                      tabindex="210"
-                      colorScheme="pink"
-                      onClick={handleClickGetBalance}
-                    >
-                      balanceOf
-                    </Button>
-                  </FormLabel>
-                  <Input
-                    type="text"
-                    placeholder={"ethereum address"}
-                    tabindex="200"
-                    onChange={(event) => setAccount(event.target.value)}
-                    size="md"
-                  />
-                </HStack>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </>
-    )
-}
+              <Input
+                placeholder="spender"
+                tabindex="180"
+                onMouseEnter={() =>
+                  ToastHover(
+                    "Allowance",
+                    "Retrieve the amount owner allowed spender to spend"
+                  )
+                }
+                size="md"
+                type="text"
+                onChange={(event) => setSpender(event.target.value)}
+                size="md"
+              />
+            </HStack>
+            <HStack>
+              <FormLabel>
+                <Button
+                  tabindex="210"
+                  colorScheme="pink"
+                  onClick={handleClickGetBalance}
+                >
+                  balanceOf
+                </Button>
+              </FormLabel>
+              <Input
+                type="text"
+                placeholder={"ethereum address"}
+                tabindex="200"
+                onMouseEnter={() =>
+                  ToastHover("Balance Of", "The balance of the address entered")
+                }
+                onChange={(event) => setAccount(event.target.value)}
+                size="md"
+              />
+            </HStack>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
+    </>
+  );
+};
 
 export default ERC20Form;
