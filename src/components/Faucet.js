@@ -1,5 +1,5 @@
 import React from "react";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Web3Context } from "web3-hooks";
 
 import getItemSoundFile from "../res/sounds/item_get_1.wav";
