@@ -29,12 +29,40 @@ import {
 const ERC20Token = () => {
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const kristhal = useContext(KhristalContext)
+  const khristal = useContext(KhristalContext)
   const [amount, setAmount] = useState(0)
   const [address, setAddress] = useState("0x0")
 
   // Utiliser un reducer pour ce token
   // parce-que ça fait masse, de masse de fonctions quand meme
+
+  const handleOnClickTransfer = async () => {
+    try {
+      setIsLoading(true)
+      let tx = await khristal.transfer(address, Number(amount))
+      await tx.wait()
+      toast({
+        title: 'Transfer effectuée !!',
+        description: `Use it wisely! `,
+        status: 'success',
+        duration: 10000,
+        isClosable: true,
+      })
+    } catch (e) {
+      console.log(e)
+      if (e.code === "UNPREDICTABLE_GAS_LIMIT") {
+        toast({
+          title: 'You already claimed 10 Khristal! Wait until you can withdraw anymore!',
+          description: e.message,
+          status: 'error',
+          duration: 10000,
+          isClosable: true,
+        })
+      }
+    } finally {
+      setIsLoading(false)
+    }
+  }
   return (
     <> 
     
@@ -65,9 +93,9 @@ const ERC20Token = () => {
               <AccordionPanel pb={4}>
                 <FormControl id="fn1" spacing={1}>
                   <HStack>
-                    <Input placeholder="spender" />
+                    <Input placeholder="spender" onChange={(e) => setAddress(e.target.value)}/>
                     <Button colorScheme="purple">Approve</Button>
-                    <Input placeholder="amount" />
+                    <Input placeholder="amount" onChange={(e) => setAmount(e.target.value)} />
                   </HStack>
                 </FormControl>
               </AccordionPanel>
@@ -144,7 +172,7 @@ const ERC20Token = () => {
                   <HStack mb={2}>
                     <Input placeholder="recipient" size="md" />
                     <FormLabel>
-                      <Button colorScheme="purple">Transfer</Button>
+                      <Button colorScheme="purple" onClick={handleOnClickTransfer}>Transfer</Button>
                     </FormLabel>
                     <Input placeholder="amount" size="md" />
                   </HStack>
