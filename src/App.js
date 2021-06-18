@@ -20,7 +20,7 @@ import chestAppearsTwoSound from "./res/sounds/chest_appears_2.wav";
 
 function App() {
   const faucet = useContract(faucetAddress, faucetAbi);
-  const khristal = useContract(tokenAddress, tokenAbi)
+  const khristal = useContract(tokenAddress, tokenAbi);
 
   const tabsOnChange = async (e) => {
     if (e === 1) {
@@ -40,6 +40,7 @@ function App() {
       m={0}
       colorScheme="purple"
     >
+
       <TabList backgroundColor="purple.900" color="pink">
         <Tab backgroundColor="white">Faucet</Tab>
         <Tab backgroundColor="white">ERC20</Tab>
@@ -52,11 +53,9 @@ function App() {
           </FaucetContext.Provider>
         </TabPanel>
         <TabPanel>
-
           <KhristalContext.Provider value={khristal}>
-               <ERC20Token />
-          </KhristalContext.Provider> 
-
+            <ERC20Token />
+          </KhristalContext.Provider>
         </TabPanel>
       </TabPanels>
     </Tabs>
