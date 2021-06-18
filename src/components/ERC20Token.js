@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-import { useState, useContext, useReducer } from "react";
+import { useState, useContext, useReducer, useEffect } from "react";
 import { ERC20GetterReducer, tokenGetterState } from "../reducer/ERC20GetterReducer";
-=======
-import { useState, useContext } from "react";
 import { ethers } from "ethers";
 import { Web3Context } from "web3-hooks";
->>>>>>> 7bf277c1410db50c782accec6077eb1b9e1850e2
 import { KhristalContext } from "../contexts/KhristalContext";
-import { ethers } from "ethers";
 import {
   Stack,
   HStack,
@@ -35,7 +30,7 @@ import {
 } from "@chakra-ui/react";
 
 const ERC20Token = () => {
-  const [web3state, login] = useContext(Web3Context);
+  const [web3State] = useContext(Web3Context);
   const toast = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const khristal = useContext(KhristalContext);
@@ -45,7 +40,7 @@ const ERC20Token = () => {
   const [account, setAccount] = useState('0x0');
   const [spender, setSpender] = useState("0x0");
 
-<
+
   const [state, dispatch] = useReducer(ERC20GetterReducer, tokenGetterState)
   const { name, symbol, decimals, total} = state;
   
@@ -55,6 +50,105 @@ const ERC20Token = () => {
 
   // Utiliser un reducer pour ce token
   // parce-que ça fait masse, de masse de fonctions quand meme
+
+  useEffect(() => {
+    // si khristal est pas null alors
+    if (khristal) {
+      const callBack = (account, spender, str) => {
+        if (account.toLowerCase() == web3State.account.toLowerCase()) {
+          toast({
+            title: 'Event Approval',
+            description: `You: ${account} approved ${spender} with value: ${str}`,
+            status: 'info',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
+      }
+      // ecouter sur l'event DataSet
+      khristal.on('Approval', callBack)
+      return () => {
+        // arreter d'ecouter lorsque le component sera unmount
+        khristal.off('Approval', callBack)
+      }
+    }
+  }, [khristal, web3State.account, toast])
+
+  useEffect(() => {
+    // si khristal est pas null alors
+    if (khristal) {
+      const callBack = (account, recipient, amount) => {
+        if (account.toLowerCase() == web3State.account.toLowerCase()) {
+          toast({
+            title: 'Event Transfer',
+            description: `${account} sent ${recipient} with value: ${amount}`,
+            status: 'info',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
+      }
+      // ecouter sur l'event DataSet
+      khristal.on('Transfer', callBack)
+      return () => {
+        // arreter d'ecouter lorsque le component sera unmount
+        khristal.off('Transfer', callBack)
+      }
+    }
+  }, [khristal, web3State.account, toast])
+
+
+  useEffect(() => {
+    // si khristal est pas null alors
+    if (khristal) {
+      const callBack = (account, str) => {
+        setAmount(str)
+        if (account.toLowerCase() == web3State.account.toLowerCase()) {
+          toast({
+            title: 'Event Transfer',
+            description: `${account} set storage with value: ${str}`,
+            status: 'info',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
+      }
+      // ecouter sur l'event DataSet
+      khristal.on('Transfer', callBack)
+      return () => {
+        // arreter d'ecouter lorsque le component sera unmount
+        khristal.off('Transfer', callBack)
+      }
+    }
+  }, [khristal, web3State.account, toast])
+
+  useEffect(() => {
+    // si khristal est pas null alors
+    if (khristal) {
+      const callBack = (account, str) => {
+        setAmount(str)
+        if (account.toLowerCase() == web3State.account.toLowerCase()) {
+          toast({
+            title: 'Event Transfer',
+            description: `${account} set storage with value: ${str}`,
+            status: 'info',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
+      }
+      // ecouter sur l'event DataSet
+      khristal.on('Transfer', callBack)
+      return () => {
+        // arreter d'ecouter lorsque le component sera unmount
+        khristal.off('Transfer', callBack)
+      }
+    }
+  }, [khristal, web3State.account, toast])
 
   const handleGetName = async () => {
     try {
