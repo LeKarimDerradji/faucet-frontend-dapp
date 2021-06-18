@@ -277,7 +277,7 @@ const ERC20Token = () => {
   const handleClickGetAllowance = async () => {
     try {
       const allowanceTx = await khristal.allowance(account, spender);
-      setAllowance(ethers.utils.formatEther(allowanceTx));
+      setAllowance(allowanceTx);
       console.log(allowanceTx);
       toast({
         title: `Allowance of ${account} for ${spender}`,
