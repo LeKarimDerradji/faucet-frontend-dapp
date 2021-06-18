@@ -228,6 +228,7 @@ const ERC20Token = () => {
       console.log(error);
     }
   };
+
   const handleOnClickTransfer = async () => {
     try {
       setIsLoading(true);
@@ -330,8 +331,8 @@ const ERC20Token = () => {
   const handleClickIncreaseAllowance = async () => {
     try {
       const increaseAllowance = await khristal.increaseAllowance(
-        spender,
-        amount
+        increaseAllowanceSpender,
+        increaseAllowanceAddVal
       );
       console.log(increaseAllowance);
       toast({
@@ -479,7 +480,12 @@ const ERC20Token = () => {
                       size="md"
                     />
                     <FormLabel>
-                      <Button colorScheme="purple">increaseAllowance</Button>
+                      <Button
+                        onClick={handleClickIncreaseAllowance}
+                        colorScheme="purple"
+                      >
+                        increaseAllowance
+                      </Button>
                     </FormLabel>
                     <Input
                       placeholder="added value"
@@ -509,7 +515,11 @@ const ERC20Token = () => {
               <AccordionPanel pb={4}>
                 <FormControl id="fn4" spacing={3}>
                   <HStack mb={2}>
-                    <Input placeholder="recipient" size="md" />
+                    <Input
+                      placeholder="recipient"
+                      onChange={(event) => setAddress(event.target.value)}
+                      size="md"
+                    />
                     <FormLabel>
                       <Button
                         colorScheme="purple"
@@ -518,7 +528,11 @@ const ERC20Token = () => {
                         Transfer
                       </Button>
                     </FormLabel>
-                    <Input placeholder="amount" size="md" />
+                    <Input
+                      placeholder="amount"
+                      onChange={(event) => setAmount(event.target.value)}
+                      size="md"
+                    />
                     <FormHelperText>
                       Transfer token to a given address
                     </FormHelperText>
