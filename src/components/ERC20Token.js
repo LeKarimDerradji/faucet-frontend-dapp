@@ -166,6 +166,7 @@ const ERC20Token = () => {
   }, [khristal, web3State.account, toast]);
 
   const handleGetName = async () => {
+    setIsLoading(true);
     try {
       let name = await khristal.name();
       dispatch({ type: "GET_NAME", payload: name });
@@ -178,10 +179,13 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
+    }  finally {
+      setIsLoading(false);
     }
   };
 
   const handleGetSymbol = async () => {
+    setIsLoading(true);
     try {
       let symbol = await khristal.symbol();
       dispatch({ type: "GET_SYMBOL", payload: symbol });
@@ -194,6 +198,8 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
+    }  finally {
+      setIsLoading(false);
     }
   };
 
@@ -210,11 +216,15 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
+    }  finally {
+      setIsLoading(false);
     }
   };
 
   const handleGetDecimals = async () => {
+    setIsLoading(true);
     try {
+      setIsLoading(true);
       let decimals = await khristal.decimals();
       dispatch({ type: "GET_DECIMALS", payload: decimals });
       toast({
@@ -226,9 +236,12 @@ const ERC20Token = () => {
       });
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleOnClickTransfer = async () => {
+    setIsLoading(true);
     try {
       setIsLoading(true);
       const amount = await ethers.utils.parseEther(amount)
@@ -259,6 +272,7 @@ const ERC20Token = () => {
   };
 
   const handleClickGetBalance = async () => {
+    setIsLoading(true);
     try {
       const balance = await khristal.balanceOf(account);
       setTokenBalance(ethers.utils.formatEther(balance));
@@ -272,10 +286,13 @@ const ERC20Token = () => {
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleClickGetAllowance = async () => {
+    setIsLoading(true);
     try {
       const allowanceTx = await khristal.allowance(account, spender);
       setAllowance(allowanceTx);
@@ -289,10 +306,13 @@ const ERC20Token = () => {
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleClickApprove = async () => {
+    setIsLoading(true);
     try {
       const approve = await khristal.approve(approveSpender, approveAmount);
       console.log(approve);
@@ -305,10 +325,13 @@ const ERC20Token = () => {
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleClickDecreaseAllowance = async () => {
+    setIsLoading(true);
     try {
       const decreaseAllowance = await khristal.decreaseAllowance(
         spender,
@@ -325,10 +348,13 @@ const ERC20Token = () => {
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleClickIncreaseAllowance = async () => {
+    setIsLoading(true);
     try {
       const increaseAllowance = await khristal.increaseAllowance(
         spender,
@@ -344,6 +370,8 @@ const ERC20Token = () => {
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -365,6 +393,8 @@ const ERC20Token = () => {
       });
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
