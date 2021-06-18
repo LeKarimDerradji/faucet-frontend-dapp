@@ -15,12 +15,10 @@ import {
   Input,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
   Button,
   Box,
   useToast,
-  ButtonGroup,
 } from "@chakra-ui/react";
 
 import {
@@ -45,7 +43,6 @@ const ERC20Token = () => {
   const [state, dispatch] = useReducer(ERC20GetterReducer, tokenGetterState);
   const { name, symbol, decimals, total } = state;
 
-  const [isBalanceOfLoading, setIsBalanceOfLoading] = useState(false);
   const [balance, setBalance] = useState(0);
 
   const [transferFromSender, setTransferFromSender] = useState("0x0");
@@ -395,8 +392,14 @@ const ERC20Token = () => {
         isClosable: true,
       });
     } catch (e) {
-      console.log(e);
-    } finally {
+      toast({
+        title: `Allowance of ${transferFromSender} for ${transferFromRecipient}`,
+        description: `${e.message}`,
+        size:"xl",
+        status: "warning",
+        duration: 10000,
+        isClosable: true,
+    })} finally {
       setIsLoading(false);
     }
   };

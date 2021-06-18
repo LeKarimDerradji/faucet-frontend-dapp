@@ -3,21 +3,13 @@ import { Web3Context } from "web3-hooks";
 import beamSoundFile from '../res/sounds/beam.wav'
 
 import {
-  Alert,
-  AlertIcon,
-  Input,
   Button,
   Link,
   Flex,
   Spacer,
   Heading,
   Text,
-  HStack,
-  VStack,
-  Spinner,
-  useToast,
   Box,
-  Image,
   useDisclosure,
 } from "@chakra-ui/react";
 

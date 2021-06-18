@@ -5,7 +5,6 @@ import { Web3Context } from "web3-hooks";
 import getItemSoundFile from "../res/sounds/item_get_1.wav";
 import beamSoundFile from "../res/sounds/beam.wav";
 
-import { useEffect } from "react";
 import { FaucetContext } from "../contexts/FaucetContext";
 
 import {
