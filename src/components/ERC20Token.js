@@ -240,12 +240,12 @@ const ERC20Token = () => {
       setIsLoading(false);
     }
   };
+
   const handleOnClickTransfer = async () => {
     setIsLoading(true);
     try {
       setIsLoading(true);
-      const amount = await ethers.utils.parseEther(amount)
-      let tx = await khristal.transfer(address, amount.toString());
+      let tx = await khristal.transfer(address, Number(amount));
       await tx.wait();
       toast({
         title: "Transfer effectuée !!",
@@ -334,14 +334,15 @@ const ERC20Token = () => {
     setIsLoading(true);
     try {
       const decreaseAllowance = await khristal.decreaseAllowance(
-        spender,
-        amount
+        decreaseAllowanceSpender,
+        decreaseAllowanceSubVal
       );
       const allowanceTx = await khristal.allowance(account, spender);
+      setAllowance(allowanceTx);
       console.log(decreaseAllowance);
       toast({
         title: `Allowance decreased`,
-        description: `Allowance decreased of ${amount.toString()} for ${spender}`,
+        description: `Allowance decreased of ${decreaseAllowanceSubVal.toString()} for ${decreaseAllowanceSpender}`,
         status: "success",
         duration: 10000,
         isClosable: true,
@@ -357,13 +358,15 @@ const ERC20Token = () => {
     setIsLoading(true);
     try {
       const increaseAllowance = await khristal.increaseAllowance(
-        spender,
-        amount
+        increaseAllowanceSpender,
+        increaseAllowanceAddVal
       );
+      const allowanceTx = await khristal.allowance(account, spender);
+      setAllowance(allowanceTx);
       console.log(increaseAllowance);
       toast({
         title: `Allowance increased`,
-        description: `Allowance increased of ${amount.toString()} for ${spender}`,
+        description: `Allowance increased of ${increaseAllowanceSpender.toString()} for ${increaseAllowanceAddVal}`,
         status: "success",
         duration: 10000,
         isClosable: true,
@@ -464,7 +467,9 @@ const ERC20Token = () => {
                   <HStack mb={2}>
                     <Input
                       placeholder="spender"
-                      onChange={(event) => setSpender(event.target.value)}
+                      onChange={(event) =>
+                        setDecreaseAllowanceSpender(event.target.value)
+                      }
                       size="md"
                     />
                     <FormLabel>
@@ -477,7 +482,9 @@ const ERC20Token = () => {
                     </FormLabel>
                     <Input
                       placeholder="substracted value"
-                      onChange={(event) => setAmount(event.target.value)}
+                      onChange={(event) =>
+                        setDecreaseAllowanceSubVal(event.target.value)
+                      }
                       size="md"
                     />
                     <FormHelperText>
@@ -510,7 +517,12 @@ const ERC20Token = () => {
                       size="md"
                     />
                     <FormLabel>
-                      <Button colorScheme="purple">increaseAllowance</Button>
+                      <Button
+                        onClick={handleClickIncreaseAllowance}
+                        colorScheme="purple"
+                      >
+                        increaseAllowance
+                      </Button>
                     </FormLabel>
                     <Input
                       placeholder="added value"
@@ -540,7 +552,12 @@ const ERC20Token = () => {
               <AccordionPanel pb={4}>
                 <FormControl id="fn4" spacing={3}>
                   <HStack mb={2}>
-                    <Input value={address} type='text' placeholder="recipient" size="md" onChange={(e) => setAddress(e.target.value)}/>
+                    <Input
+                      placeholder="recipient"
+                      onChange={(event) => setAddress(event.target.value)}
+                      size="md"
+                    />
+
                     <FormLabel>
                       <Button
                         colorScheme="purple"
@@ -549,7 +566,13 @@ const ERC20Token = () => {
                         Transfer
                       </Button>
                     </FormLabel>
-                    <Input value={amount} type='text' placeholder="amount" size="md" onChange={(e) => setAmount(e.target.event)} />
+
+                    <Input
+                      placeholder="amount"
+                      onChange={(event) => setAmount(event.target.value)}
+                      size="md"
+                    />
+
                     <FormHelperText>
                       Transfer token to a given address
                     </FormHelperText>

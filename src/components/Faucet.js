@@ -5,6 +5,7 @@ import { Web3Context } from "web3-hooks";
 import getItemSoundFile from "../res/sounds/item_get_1.wav";
 import beamSoundFile from "../res/sounds/beam.wav";
 
+import { useEffect } from "react";
 import { FaucetContext } from "../contexts/FaucetContext";
 
 import {
@@ -32,24 +33,23 @@ const Faucet = () => {
       const callBack = (account, amount) => {
         if (account.toLowerCase() !== web3State.account.toLowerCase()) {
           toast({
-            title: 'Event TokenSent',
+            title: "Event TokenSent",
             description: `${account} withdrawed ${amount} ACK`,
-            status: 'info',
-            position: 'top-right',
+            status: "info",
+            position: "top-right",
             duration: 9000,
             isClosable: true,
-          })
+          });
         }
-      }
+      };
       // ecouter sur l'event DataSet
-      faucet.on('TokenSent', callBack)
+      faucet.on("TokenSent", callBack);
       return () => {
         // arreter d'ecouter lorsque le component sera unmount
-        faucet.off('TokenSent', callBack)
-      }
+        faucet.off("TokenSent", callBack);
+      };
     }
-  }, [faucet, web3State.account, toast])
-
+  }, [faucet, web3State.account, toast]);
 
   const handleClickRequestTokens = async () => {
     try {
