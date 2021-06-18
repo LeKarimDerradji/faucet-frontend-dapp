@@ -26,7 +26,30 @@ const Faucet = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(0);
 
-  console.log(faucet);
+  useEffect(() => {
+    // si khristal est pas null alors
+    if (faucet) {
+      const callBack = (account, amount) => {
+        if (account.toLowerCase() !== web3State.account.toLowerCase()) {
+          toast({
+            title: 'Event TokenSent',
+            description: `${account} withdrawed ${amount} ACK`,
+            status: 'info',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          })
+        }
+      }
+      // ecouter sur l'event DataSet
+      faucet.on('TokenSent', callBack)
+      return () => {
+        // arreter d'ecouter lorsque le component sera unmount
+        faucet.off('TokenSent', callBack)
+      }
+    }
+  }, [faucet, web3State.account, toast])
+
 
   const handleClickRequestTokens = async () => {
     try {

@@ -232,7 +232,8 @@ const ERC20Token = () => {
   const handleOnClickTransfer = async () => {
     try {
       setIsLoading(true);
-      let tx = await khristal.transfer(address, Number(amount));
+      const amount = await ethers.utils.parseEther(amount);
+      let tx = await khristal.transfer(address, amount.toString());
       await tx.wait();
       toast({
         title: "Transfer effectuée !!",
@@ -520,6 +521,15 @@ const ERC20Token = () => {
                       onChange={(event) => setAddress(event.target.value)}
                       size="md"
                     />
+
+                    <Input
+                      value={address}
+                      type="text"
+                      placeholder="recipient"
+                      size="md"
+                      onChange={(e) => setAddress(e.target.value)}
+                    />
+
                     <FormLabel>
                       <Button
                         colorScheme="purple"
@@ -528,11 +538,21 @@ const ERC20Token = () => {
                         Transfer
                       </Button>
                     </FormLabel>
+
                     <Input
                       placeholder="amount"
                       onChange={(event) => setAmount(event.target.value)}
                       size="md"
                     />
+
+                    <Input
+                      value={amount}
+                      type="text"
+                      placeholder="amount"
+                      size="md"
+                      onChange={(e) => setAmount(e.target.event)}
+                    />
+
                     <FormHelperText>
                       Transfer token to a given address
                     </FormHelperText>
