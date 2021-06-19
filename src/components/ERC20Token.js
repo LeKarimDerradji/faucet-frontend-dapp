@@ -21,8 +21,8 @@ const ERC20Token = () => {
   const [isLoading, setIsLoading] = useState(false);
   const khristal = useContext(KhristalContext);
 
-  const [dispatch] = useReducer(ERC20GetterReducer, tokenGetterState);
-
+  const [state, dispatch] = useReducer(ERC20GetterReducer, tokenGetterState);
+  let {name, symbol, totalSupply, decimals} = state
   // Utiliser un reducer pour ce token
   // parce-que ça fait masse, de masse de fonctions quand meme
 

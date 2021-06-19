@@ -54,6 +54,7 @@ const ERC20Form = () => {
     useState("0x0");
   const [increaseAllowanceAddVal, setIncreaseAllowanceAddVal] = useState(0);
 
+
   const ToastHover = (title, description) => {
     return toast({
       title: title,
@@ -119,7 +120,7 @@ const ERC20Form = () => {
     try {
       const allowanceTx = await khristal.allowance(account, spender);
       setAllowance(allowanceTx);
-      console.log(allowanceTx);
+      allowanceTx.wait()
       toast({
         title: `Allowance of ${account} for ${spender}`,
         description: `${allowance.toString()}`,
@@ -138,9 +139,9 @@ const ERC20Form = () => {
     setIsLoading(true);
     try {
       const approve = await khristal.approve(approveSpender, approveAmount);
-      console.log(approve);
+      approve.wait()
       toast({
-        title: `Allowance of ${account} for ${spender}`,
+        title: `Allowance of ${approveSpender} for ${approveAmount}`,
         description: `approved ${approveAmount.toString()} by ${approveSpender}`,
         status: "success",
         duration: 10000,
@@ -251,7 +252,7 @@ const ERC20Form = () => {
                   onMouseEnter={() =>
                     ToastHover("Approve", "Approve a given spender")
                   }
-                  onChange={(e) => setApproveSpender(e.target.value)}
+                  setTimeoutonChange={(e) => setApproveSpender(e.target.value)}
                 />
                 <FormLabel>
                   <Button
