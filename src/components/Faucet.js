@@ -26,7 +26,31 @@ const Faucet = () => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    // si khristal est pas null alors
+    // si faucet est pas null alors
+    if (faucet) {
+      const callBack = (account, amount) => {
+        if (account.toLowerCase() == web3State.account.toLowerCase()) {
+          toast({
+            title: "Event TokenSent",
+            description: `${account} withdrawed ${amount} ACK`,
+            status: "info",
+            position: "top-right",
+            duration: 9000,
+            isClosable: true,
+          });
+        }
+      };
+      // ecouter sur l'event TokenSent
+      faucet.on("TokenSent", callBack);
+      return () => {
+        // arreter d'ecouter lorsque le component sera unmount
+        faucet.off("TokenSent", callBack);
+      };
+    }
+  }, [faucet]);
+
+  useEffect(() => {
+    // si faucet est pas null alors
     if (faucet) {
       const callBack = (account, amount) => {
         if (account.toLowerCase() !== web3State.account.toLowerCase()) {
@@ -40,7 +64,7 @@ const Faucet = () => {
           });
         }
       };
-      // ecouter sur l'event DataSet
+      // ecouter sur l'event TokenSent
       faucet.on("TokenSent", callBack);
       return () => {
         // arreter d'ecouter lorsque le component sera unmount
@@ -90,7 +114,7 @@ const Faucet = () => {
             <>
               <VStack>
                 <Text color="pink.100" as="b" fontSize="20" textAlign="center">
-                  Time Remaining before next Allowance: {value}
+                  Retrieve your tokens: 
                 </Text>
 
                 <Image

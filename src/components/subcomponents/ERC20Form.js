@@ -129,8 +129,13 @@ const ERC20Form = () => {
         isClosable: true,
       });
     } catch (e) {
-      console.log(e);
-    } finally {
+      toast({
+        title: `Error`,
+        description: `${e}`,
+        status: "info",
+        duration: 10000,
+        isClosable: true,
+     })} finally {
       setIsLoading(false);
     }
   };
@@ -141,7 +146,7 @@ const ERC20Form = () => {
       const approve = await khristal.approve(approveSpender, approveAmount);
       approve.wait()
       toast({
-        title: `Allowance of ${approveSpender} for ${approveAmount}`,
+        title: `Allowance of ${web3State.account} approved ${approveAmount} ACK to ${approveSpender}`,
         description: `approved ${approveAmount.toString()} by ${approveSpender}`,
         status: "success",
         duration: 10000,
@@ -252,7 +257,7 @@ const ERC20Form = () => {
                   onFocus={() =>
                     ToastHover("Approve", "Approve a given spender")
                   }
-                  setTimeoutonChange={(e) => setApproveSpender(e.target.value)}
+                  onChange={(e) => setApproveSpender(e.target.value)}
                 />
                 <FormLabel>
                   <Button
