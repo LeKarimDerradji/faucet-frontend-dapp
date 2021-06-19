@@ -249,7 +249,7 @@ const ERC20Form = () => {
                 <Input
                   placeholder="spender"
                   tabindex="10"
-                  onMouseEnter={() =>
+                  onFocus={() =>
                     ToastHover("Approve", "Approve a given spender")
                   }
                   setTimeoutonChange={(e) => setApproveSpender(e.target.value)}
@@ -266,7 +266,7 @@ const ERC20Form = () => {
                 <Input
                   placeholder="amount"
                   tabindex="20"
-                  onMouseEnter={() =>
+                  onFocus={() =>
                     ToastHover("Approve", "Approve a given spender")
                   }
                   onChange={(e) => setApproveAmount(e.target.value)}
@@ -292,7 +292,7 @@ const ERC20Form = () => {
                 <Input
                   placeholder="spender"
                   tabindex="40"
-                  onMouseEnter={() =>
+                  onFocus={() =>
                     ToastHover(
                       "Decrease Allowance",
                       "Decrease the allowance of a given spender"
@@ -315,7 +315,7 @@ const ERC20Form = () => {
                 <Input
                   placeholder="substracted value"
                   tabindex="50"
-                  onMouseEnter={() =>
+                  onFocus={() =>
                     ToastHover(
                       "Decrease Allowance",
                       "Decrease the allowance of a given spender"
@@ -347,7 +347,7 @@ const ERC20Form = () => {
                 <Input
                   colorScheme="purple"
                   placeholder="spender"
-                  onMouseEnter={() =>
+                  onFocus={() =>
                     ToastHover(
                       "Increase Allowance",
                       "Increase the allowance of a given spender"
@@ -371,7 +371,7 @@ const ERC20Form = () => {
                 <Input
                   placeholder="added value"
                   tabindex="80"
-                  onMouseEnter={() =>
+                  onFocus={() =>
                     ToastHover(
                       "Increase Allowance",
                       "Increase the allowance of a given spender"
@@ -403,7 +403,7 @@ const ERC20Form = () => {
                 <Input
                   placeholder="recipient"
                   tabindex="100"
-                  onMouseEnter={() =>
+                  onFocus={() =>
                     ToastHover(
                       "Transfer",
                       "Transfer an amount of token to the recipient"
@@ -426,7 +426,7 @@ const ERC20Form = () => {
                 <Input
                   placeholder="amount"
                   tabindex="110"
-                  onMouseEnter={() =>
+                  onFocus={() =>
                     ToastHover(
                       "Transfer",
                       "Transfer an amount of token to the recipient"
@@ -454,7 +454,7 @@ const ERC20Form = () => {
             <FormControl id="fn5" spacing={3}>
               <HStack
                 mb={2}
-                onMouseEnter={() =>
+                onFocus={() =>
                   ToastHover(
                     "Transfer From",
                     "Transfer an amount of token to the recipient from the sender account"
@@ -530,7 +530,7 @@ const ERC20Form = () => {
               <Input
                 placeholder="owner"
                 tabindex="170"
-                onMouseEnter={() =>
+                onFocus={() =>
                   ToastHover(
                     "Allowance",
                     "Retrieve the amount owner allowed spender to spend"
@@ -546,7 +546,7 @@ const ERC20Form = () => {
               <Input
                 placeholder="spender"
                 tabindex="180"
-                onMouseEnter={() =>
+                onFocus={() =>
                   ToastHover(
                     "Allowance",
                     "Retrieve the amount owner allowed spender to spend"
@@ -563,7 +563,7 @@ const ERC20Form = () => {
                 <Button
                   tabindex="210"
                   colorScheme="pink"
-                  onClick={handleClickGetBalance}
+                  onFocus={handleClickGetBalance}
                 >
                   balanceOf
                 </Button>
@@ -572,8 +572,8 @@ const ERC20Form = () => {
                 type="text"
                 placeholder={"ethereum address"}
                 tabindex="200"
-                onMouseEnter={() =>
-                  ToastHover("Balance Of", "The balance of the address entered")
+                onFocus={() =>
+                  ToastHover("Balance Of", "Get the balance of the address passed in")
                 }
                 onChange={(event) => setAccount(event.target.value)}
                 size="md"
